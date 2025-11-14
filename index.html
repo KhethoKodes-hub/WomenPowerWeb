@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EWoman Power Trading & Projects</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            background: rgba(139, 0, 139, 0.95);
+            padding: 1rem 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        nav .logo {
+            color: #FFD700;
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(139, 0, 139, 0.7), rgba(75, 0, 130, 0.8)), 
+                        url('https://images.unsplash.com/photo-1545262810-77515befe149?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, white);
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 2rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: #FFD700;
+            color: #8B008B;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
+            background: #FFA500;
+        }
+
+        /* About Section */
+        .about {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        .about-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .about-image {
+            height: 400px;
+            background: linear-gradient(rgba(139, 0, 139, 0.5), rgba(75, 0, 130, 0.5)),
+                        url('https://images.unsplash.com/photo-1628672795205-4d98d4527796?w=800') center/cover;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .about-image:hover {
+            transform: scale(1.05);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            color: #8B008B;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: #FFD700;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 5rem 5%;
+            background: linear-gradient(rgba(139, 0, 139, 0.05), rgba(255, 215, 0, 0.05)),
+                        url('https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=1600') center/cover fixed;
+            position: relative;
+        }
+
+        .services::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.92);
+        }
+
+        .services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(139, 0, 139, 0.1);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(139, 0, 139, 0.3);
+            border-color: #FFD700;
+        }
+
+        .service-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8B008B, #4B0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transform: rotate(360deg);
+        }
+
+        .service-card h3 {
+            color: #8B008B;
+            margin-bottom: 1rem;
+        }
+
+        /* Values Section */
+        .values {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #8B008B 0%, #4B0082 100%);
+            color: white;
+        }
+
+        .values-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .values-container .section-title {
+            color: #FFD700;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .value-item {
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .value-item:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+        }
+
+        .value-item h4 {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 5rem 5%;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600') center/cover fixed;
+            color: white;
+        }
+
+        .contact-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .contact-item:hover {
+            background: rgba(139, 0, 139, 0.3);
+            transform: translateX(10px);
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: #8B008B;
+            flex-shrink: 0;
+        }
+
+        .company-info {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .company-info h3 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .info-label {
+            color: #FFD700;
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            color: #FFD700;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .about-container,
+            .contact-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">EWoman Power T&P</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>EWoman Power Trading & Projects</h1>
+            <p>Your Trusted Independent Fuel Service Provider</p>
+            <a href="#contact" class="btn">Get in Touch</a>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-container">
+            <div>
+                <h2 class="section-title">About Us</h2>
+                <p style="margin-bottom: 1rem;">EWoman Power Trading and Projects was established on October 2nd, 2018, by Onalenna Caroline Johnny. We are a 100% black female-owned company dedicated to excellence in fuel supply services.</p>
+                <p style="margin-bottom: 1rem;"><strong>Our Mission:</strong> We maintain high levels of customer satisfaction while forming sound relationships for the benefit of all parties. We contribute to employment growth in South Africa and establish successful partnerships with our clients.</p>
+                <p><strong>Our Vision:</strong> To provide high-quality service of choice that is reliable and distinctly different from competitors. We strive to be recognised as the best in all industries and sectors we operate in while pursuing excellence.</p>
+            </div>
+            <div class="about-image"></div>
+        </div>
+    </section>
+
+    <section id="services" class="services">
+        <div class="services-container">
+            <h2 class="section-title">Our Services</h2>
+            <p style="max-width: 800px; margin: 1rem 0;">As an independent and compliant fuel service provider, we deliver quality products and services to organizations and departments across South Africa.</p>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">⛽</div>
+                    <h3>Petrol Supply</h3>
+                    <p>Reliable petrol supply services for government, private sectors, and households with timely delivery and competitive pricing.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🚛</div>
+                    <h3>Diesel Supply</h3>
+                    <p>High-quality diesel supply to power your operations. We ensure consistent availability and prompt delivery schedules.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">🛢️</div>
+                    <h3>Lubricants</h3>
+                    <p>Premium lubricants for various applications. We provide comprehensive solutions for all your lubrication needs.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="values" class="values">
+        <div class="values-container">
+            <h2 class="section-title">Our Core Values</h2>
+            <p style="max-width: 800px; margin: 1rem auto 0;">These principles guide everything we do and define who we are as a company.</p>
+            <div class="values-grid">
+                <div class="value-item">
+                    <h4>Team Work</h4>
+                    <p>Collaboration drives success</p>
+                </div>
+                <div class="value-item">
+                    <h4>Customer Care</h4>
+                    <p>Your satisfaction is our priority</p>
+                </div>
+                <div class="value-item">
+                    <h4>Integrity</h4>
+                    <p>Honest and ethical practices</p>
+                </div>
+                <div class="value-item">
+                    <h4>Quality Service</h4>
+                    <p>Excellence in every delivery</p>
+                </div>
+                <div class="value-item">
+                    <h4>Employment</h4>
+                    <p>Creating opportunities</p>
+                </div>
+                <div class="value-item">
+                    <h4>Accountability</h4>
+                    <p>Taking responsibility</p>
+                </div>
+                <div class="value-item">
+                    <h4>Trustworthiness</h4>
+                    <p>Building lasting relationships</p>
+                </div>
+                <div class="value-item">
+                    <h4>Reliability</h4>
+                    <p>Consistent and dependable</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="contact-container">
+            <div class="contact-info">
+                <div>
+                    <h2 class="section-title">Get In Touch</h2>
+                    <p style="margin-bottom: 2rem;">Ready to partner with us? Reach out today and let's discuss how we can serve your fuel supply needs.</p>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <h4>Phone Numbers</h4>
+                        <p>062 926 9028<br>061 656 2443<br>083 502 0274</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div>
+                        <h4>Email</h4>
+                        <p>onalennajohnny078@gmail.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <h4>Address</h4>
+                        <p>House No: 02 Wildeperdeberg<br>Phase 4, Kathu Rooisand<br>8446</p>
+                    </div>
+                </div>
+            </div>
+            <div class="company-info">
+                <h3>Company Information</h3>
+                <div class="info-row">
+                    <span class="info-label">CEO:</span>
+                    <span>Johnny O.C</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Registration:</span>
+                    <span>2018/522819/07</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Tax Reference:</span>
+                    <span>9251340239</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">BBBEE:</span>
+                    <span>100% Black Female Ownership</span>
+                </div>
+                <div class="info-row">
+                    <span class="info-label">Established:</span>
+                    <span>October 2, 2018</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 EWoman Power Trading & Projects. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; color: #ccc;">Empowering Communities Through Quality Fuel Solutions</p>
+    </footer>
+</body>
+</html>

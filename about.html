@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - EWoman Power T&P</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            background: rgba(139, 0, 139, 0.95);
+            padding: 1rem 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        nav .logo {
+            color: #FFD700;
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(139, 0, 139, 0.8), rgba(75, 0, 130, 0.9)), 
+                        url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, white);
+        }
+
+        .hero-content {
+            padding-top: 80px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Introduction Section */
+        .introduction {
+            padding: 5rem 5%;
+            background: white;
+        }
+
+        .intro-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .intro-content h2 {
+            font-size: 2.5rem;
+            color: #8B008B;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .intro-content h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60%;
+            height: 4px;
+            background: #FFD700;
+        }
+
+        .intro-content p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #8B008B 0%, #4B0082 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            box-shadow: 0 10px 30px rgba(139, 0, 139, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .highlight-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .highlight-box h3 {
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+
+        .founder-card {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .founder-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(139, 0, 139, 0.3);
+        }
+
+        .founder-image {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #8B008B, #4B0082);
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: #FFD700;
+            box-shadow: 0 5px 20px rgba(139, 0, 139, 0.4);
+        }
+
+        .founder-card h3 {
+            color: #8B008B;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .founder-card .title {
+            color: #666;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .company-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .info-item {
+            background: white;
+            padding: 0.8rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .info-label {
+            color: #8B008B;
+            font-weight: bold;
+            display: block;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Mission & Vision Section */
+        .mission-vision {
+            padding: 5rem 5%;
+            background: linear-gradient(rgba(139, 0, 139, 0.05), rgba(255, 215, 0, 0.05)),
+                        url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1600') center/cover fixed;
+            position: relative;
+        }
+
+        .mission-vision::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.93);
+        }
+
+        .mv-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .mv-card {
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+        }
+
+        .mv-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(139, 0, 139, 0.3);
+            border-color: #FFD700;
+        }
+
+        .mv-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8B008B, #4B0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .mv-card:hover .mv-icon {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transform: rotate(360deg);
+        }
+
+        .mv-card h3 {
+            color: #8B008B;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .mv-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        /* Values Section */
+        .values {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #8B008B 0%, #4B0082 100%);
+            color: white;
+        }
+
+        .values-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .values h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 3rem;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .value-card:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: scale(1.05);
+            border-color: #FFD700;
+        }
+
+        .value-card .icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .value-card h4 {
+            color: #FFD700;
+            font-size: 1.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .value-card p {
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        /* Goals & Objectives */
+        .goals {
+            padding: 5rem 5%;
+            background: white;
+        }
+
+        .goals-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .goals h2 {
+            font-size: 2.5rem;
+            color: #8B008B;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .goals h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #FFD700;
+        }
+
+        .goals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .goal-item {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 2rem;
+            border-radius: 15px;
+            border-left: 5px solid #8B008B;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .goal-item::before {
+            content: '✓';
+            position: absolute;
+            right: -20px;
+            top: -20px;
+            font-size: 8rem;
+            color: rgba(139, 0, 139, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .goal-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 10px 30px rgba(139, 0, 139, 0.2);
+            border-left-color: #FFD700;
+        }
+
+        .goal-item:hover::before {
+            color: rgba(255, 215, 0, 0.15);
+            right: 10px;
+            top: 10px;
+        }
+
+        .goal-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #8B008B, #4B0082);
+            color: #FFD700;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .goal-item p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Competitive Advantage */
+        .advantage {
+            padding: 5rem 5%;
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+                        url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=1600') center/cover fixed;
+            color: white;
+        }
+
+        .advantage-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .advantage h2 {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .advantage-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 3rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            margin-bottom: 3rem;
+        }
+
+        .advantage-content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .advantage-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-10px);
+            border-color: #FFD700;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h4 {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 0.8rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            color: #FFD700;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .intro-container,
+            .mv-container {
+                grid-template-columns: 1fr;
+            }
+
+            .goals-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">EWoman Power T&P</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>About Us</h1>
+            <p>Empowering Communities Through Quality Fuel Solutions Since 2018</p>
+        </div>
+    </section>
+
+    <section class="introduction">
+        <div class="intro-container">
+            <div class="intro-content">
+                <h2>Our Story</h2>
+                <p>EWoman Power Trading and Projects was established on October 2nd, 2018, by visionary entrepreneur Onalenna Caroline Johnny. As a 100% black female-owned company, we represent the spirit of entrepreneurship and empowerment in South Africa's fuel supply industry.</p>
+                
+                <p>We are an independent and compliant fuel service provider, delivering petrol, diesel, and lubricants to various organizations and government departments across the nation. Our commitment to excellence and customer satisfaction has positioned us as a trusted partner in the industry.</p>
+
+                <div class="highlight-box">
+                    <h3>100% Black Female Ownership</h3>
+                    <p>We are proud to contribute to economic transformation and empowerment in South Africa. Our BBBEE status reflects our commitment to inclusive growth and opportunity creation.</p>
+                </div>
+            </div>
+
+            <div class="founder-card">
+                <div class="founder-image">👩‍💼</div>
+                <h3>Onalenna Caroline Johnny</h3>
+                <p class="title">Founder & CEO</p>
+                <p style="margin-bottom: 1.5rem;">Established October 2, 2018</p>
+                
+                <div class="company-info-grid">
+                    <div class="info-item">
+                        <span class="info-label">Reg Number:</span>
+                        2018/522819/07
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Tax Ref:</span>
+                        9251340239
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">Business Type:</span>
+                        Private Company
+                    </div>
+                    <div class="info-item">
+                        <span class="info-label">BBBEE:</span>
+                        100% Certified
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="mission-vision">
+        <div class="mv-container">
+            <div class="mv-card">
+                <div class="mv-icon">🎯</div>
+                <h3>Our Mission</h3>
+                <p>EWoman Power Trading and Projects is dedicated to maintaining high levels of customer satisfaction that is achievable, while forming sound relationships for the benefit of all parties. We aim to contribute to the growth of employment in South Africa and establish successful partnerships with our clients.</p>
+            </div>
+
+            <div class="mv-card">
+                <div class="mv-icon">👁️</div>
+                <h3>Our Vision</h3>
+                <p>To provide high-quality service of choice which is reliable and distinctly different from what the competitors offer. We strive to be recognised as the best in all industries and sectors that we choose to do business in while pursuing excellence.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="values">
+        <div class="values-container">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <span class="icon">🤝</span>
+                    <h4>Team Work</h4>
+                    <p>Collaboration and unity drive our success. Together we achieve more.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">💙</span>
+                    <h4>Customer Care</h4>
+                    <p>Your satisfaction is our top priority. We go the extra mile for every client.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">⚖️</span>
+                    <h4>Integrity</h4>
+                    <p>Honest and ethical practices in everything we do. Trust is our foundation.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">⭐</span>
+                    <h4>Quality Service</h4>
+                    <p>Excellence in every delivery, every interaction, every time.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">💼</span>
+                    <h4>Employment</h4>
+                    <p>Creating opportunities and empowering communities through job creation.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">📚</span>
+                    <h4>Skills Transfer</h4>
+                    <p>Empowering the less advantaged through knowledge and skills development.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">✅</span>
+                    <h4>Accountability</h4>
+                    <p>Taking responsibility for our actions and delivering on our promises.</p>
+                </div>
+                <div class="value-card">
+                    <span class="icon">🔒</span>
+                    <h4>Trustworthiness</h4>
+                    <p>Building lasting relationships through reliability and dependability.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="goals">
+        <div class="goals-container">
+            <h2>Our Goals & Objectives</h2>
+            <div class="goals-grid">
+                <div class="goal-item">
+                    <div class="goal-number">1</div>
+                    <p>Develop a comprehensive and successful business structure that will be advantageous to all concerned parties.</p>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-number">2</div>
+                    <p>Deliver quality services to maximize customer satisfaction and exceed expectations.</p>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-number">3</div>
+                    <p>Create employment opportunities through the growth of different divisions within our company.</p>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-number">4</div>
+                    <p>Increase market share by converting potential customers into valued, long-term clients.</p>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-number">5</div>
+                    <p>Hold ourselves accountable to the highest standards by meeting our clients' needs precisely and consistently.</p>
+                </div>
+                <div class="goal-item">
+                    <div class="goal-number">6</div>
+                    <p>Develop long-standing partnerships through trust, integrity, and excellent customer service.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="advantage">
+        <div class="advantage-container">
+            <h2>Our Competitive Advantage</h2>
+            <div class="advantage-content">
+                <p>We chose the fuel supply business because we identified products and services that are in high demand. While there is competition in the market, our values, mission, objectives, and marketing strategy make us stand out from the crowd.</p>
+                
+                <p>Although we are a relatively new company and may face financial challenges competing with established players, our commitment to excellence and customer-centric approach gives us a distinct edge in the marketplace.</p>
+            </div>
+
+            <div class="advantage-features">
+                <div class="feature-card">
+                    <div class="feature-icon">🏘️</div>
+                    <h4>Local Support</h4>
+                    <p>Strong community connections and local presence</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📋</div>
+                    <h4>Easy Compliance</h4>
+                    <p>Seamless alignment with government regulations</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💝</div>
+                    <h4>Loyal Customer Base</h4>
+                    <p>Building lasting relationships through trust</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🏆</div>
+                    <h4>Excellent Service</h4>
+                    <p>Customer satisfaction is our priority</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🚚</div>
+                    <h4>Reliable Delivery</h4>
+                    <p>Timely and dependable service every time</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h4>Online Presence</h4>
+                    <p>Modern, accessible service platforms</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">💳</div>
+                    <h4>Payment Options</h4>
+                    <p>Flexible payment solutions for convenience</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h4>Qualified Team</h4>
+                    <p>Competent professionals dedicated to excellence</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 EWoman Power Trading & Projects. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; color: #ccc;">Empowering Communities Through Quality Fuel Solutions</p>
+    </footer>
+</body>
+</html>

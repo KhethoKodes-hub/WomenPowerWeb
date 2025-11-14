@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Services - EWoman Power T&P</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            width: 100%;
+            background: rgba(139, 0, 139, 0.95);
+            padding: 1rem 5%;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        nav .logo {
+            color: #FFD700;
+            font-size: 1.8rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+        }
+
+        nav a:hover {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 60vh;
+            background: linear-gradient(rgba(139, 0, 139, 0.8), rgba(75, 0, 130, 0.9)), 
+                        url('https://images.unsplash.com/photo-1571786256017-aee7a0c009b6?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100px;
+            background: linear-gradient(to bottom, transparent, white);
+        }
+
+        .hero-content {
+            padding-top: 80px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Services Overview */
+        .services-overview {
+            padding: 5rem 5%;
+            background: white;
+        }
+
+        .overview-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .overview-container h2 {
+            font-size: 2.5rem;
+            color: #8B008B;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .overview-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 4px;
+            background: #FFD700;
+        }
+
+        .overview-container p {
+            font-size: 1.15rem;
+            max-width: 900px;
+            margin: 2rem auto;
+            line-height: 1.8;
+        }
+
+        /* Main Services Section */
+        .main-services {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+        }
+
+        .main-services-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-showcase {
+            display: grid;
+            gap: 4rem;
+        }
+
+        .service-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+            background: white;
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .service-item:hover::before {
+            left: 100%;
+        }
+
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(139, 0, 139, 0.2);
+        }
+
+        .service-item:nth-child(even) {
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .service-item:nth-child(even) .service-content {
+            order: 2;
+        }
+
+        .service-item:nth-child(even) .service-visual {
+            order: 1;
+        }
+
+        .service-visual {
+            height: 300px;
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .service-visual::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 0, 139, 0.7), rgba(75, 0, 130, 0.7));
+            transition: opacity 0.3s ease;
+        }
+
+        .service-item:hover .service-visual::after {
+            opacity: 0.5;
+        }
+
+        .service-icon-large {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5rem;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+
+        .service-item:hover .service-icon-large {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        .service-content h3 {
+            color: #8B008B;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-content p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .service-features {
+            display: grid;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            border-radius: 10px;
+            border-left: 4px solid #8B008B;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            border-left-color: #FFD700;
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(139, 0, 139, 0.2);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #8B008B, #4B0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFD700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        /* Target Markets */
+        .target-markets {
+            padding: 5rem 5%;
+            background: linear-gradient(rgba(139, 0, 139, 0.95), rgba(75, 0, 130, 0.95)),
+                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600') center/cover fixed;
+            color: white;
+            position: relative;
+        }
+
+        .markets-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .markets-container h2 {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .markets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .market-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2.5rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .market-card:hover {
+            background: rgba(255, 215, 0, 0.2);
+            transform: translateY(-10px);
+            border-color: #FFD700;
+        }
+
+        .market-icon {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            display: block;
+        }
+
+        .market-card h3 {
+            color: #FFD700;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .market-card p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        /* Why Choose Us */
+        .why-choose {
+            padding: 5rem 5%;
+            background: white;
+        }
+
+        .why-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .why-container h2 {
+            font-size: 2.5rem;
+            color: #8B008B;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .why-container h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: #FFD700;
+        }
+
+        .why-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 4rem;
+        }
+
+        .why-card {
+            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
+            padding: 2.5rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .why-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 215, 0, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+        }
+
+        .why-card:hover::before {
+            left: 100%;
+        }
+
+        .why-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 40px rgba(139, 0, 139, 0.3);
+        }
+
+        .why-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #8B008B, #4B0082);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .why-card:hover .why-icon {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            transform: rotate(360deg);
+        }
+
+        .why-card h3 {
+            color: #8B008B;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .why-card p {
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 5%;
+            background: linear-gradient(135deg, #8B008B 0%, #4B0082 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            color: #FFD700;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1.2rem 3rem;
+            background: #FFD700;
+            color: #8B008B;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+            background: #FFA500;
+        }
+
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 215, 0, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        footer p {
+            color: #FFD700;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            .service-item,
+            .service-item:nth-child(even) {
+                grid-template-columns: 1fr;
+            }
+
+            .service-item:nth-child(even) .service-content {
+                order: 1;
+            }
+
+            .service-item:nth-child(even) .service-visual {
+                order: 2;
+            }
+
+            .contact-info {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="logo">EWoman Power T&P</div>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Our Services</h1>
+            <p>Comprehensive Fuel Supply Solutions Tailored to Your Needs</p>
+        </div>
+    </section>
+
+    <section class="services-overview">
+        <div class="overview-container">
+            <h2>What We Offer</h2>
+            <p>As an independent and compliant fuel service provider, EWoman Power Trading and Projects delivers top-quality petrol, diesel, and lubricants to various organizations and government departments across South Africa. Our commitment to reliability, quality, and customer satisfaction sets us apart in the industry.</p>
+        </div>
+    </section>
+
+    <section class="main-services">
+        <div class="main-services-container">
+            <div class="service-showcase">
+                <!-- Petrol Service -->
+                <div class="service-item">
+                    <div class="service-visual" style="background-image: url('https://images.unsplash.com/photo-1545262810-77515befe149?w=800');">
+                        <div class="service-icon-large">⛽</div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Petrol Supply</h3>
+                        <p>We provide reliable and high-quality petrol supply services to meet the diverse needs of government departments, private organizations, and households across South Africa.</p>
+                        <div class="service-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Premium quality unleaded petrol</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Competitive and transparent pricing</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Timely and scheduled deliveries</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Flexible supply arrangements</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Compliance with all safety standards</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diesel Service -->
+                <div class="service-item">
+                    <div class="service-visual" style="background-image: url('https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=800');">
+                        <div class="service-icon-large">🚛</div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Diesel Supply</h3>
+                        <p>Our diesel supply services ensure your operations run smoothly with consistent availability, prompt delivery, and competitive rates for bulk and regular orders.</p>
+                        <div class="service-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>High-grade diesel fuel</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Bulk supply options available</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>24/7 emergency delivery service</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Fleet management solutions</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Consistent quality assurance</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lubricants Service -->
+                <div class="service-item">
+                    <div class="service-visual" style="background-image: url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800');">
+                        <div class="service-icon-large">🛢️</div>
+                    </div>
+                    <div class="service-content">
+                        <h3>Lubricants</h3>
+                        <p>We supply premium lubricants for various applications, ensuring optimal performance and longevity for your machinery, vehicles, and industrial equipment.</p>
+                        <div class="service-features">
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Wide range of lubricant products</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Automotive and industrial oils</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Expert product recommendations</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Bulk and retail quantities</div>
+                            </div>
+                            <div class="feature-item">
+                                <div class="feature-icon">✓</div>
+                                <div>Technical support and guidance</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="target-markets">
+        <div class="markets-container">
+            <h2>Who We Serve</h2>
+            <div class="markets-grid">
+                <div class="market-card">
+                    <span class="market-icon">🏛️</span>
+                    <h3>Government</h3>
+                    <p>We partner with government departments and municipalities, providing reliable fuel supply solutions that meet strict compliance and delivery standards.</p>
+                </div>
+                <div class="market-card">
+                    <span class="market-icon">🏢</span>
+                    <h3>Private Sector</h3>
+                    <p>From small businesses to large corporations, we deliver customized fuel supply services that support your operational efficiency and growth.</p>
+                </div>
+                <div class="market-card">
+                    <span class="market-icon">🏠</span>
+                    <h3>Households</h3>
+                    <p>We offer convenient and reliable fuel delivery services for residential customers, ensuring you never run out when you need it most.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="why-choose">
+        <div class="why-container">
+            <h2>Why Choose EWoman Power T&P</h2>
+            <div class="why-grid">
+                <div class="why-card">
+                    <div class="why-icon">🎯</div>
+                    <h3>Reliability</h3>
+                    <p>Timely deliveries and consistent service you can count on, every single time.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">⭐</div>
+                    <h3>Quality Products</h3>
+                    <p>Premium fuel and lubricants that meet the highest industry standards.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">💰</div>
+                    <h3>Competitive Pricing</h3>
+                    <p>Fair, transparent rates with flexible payment options to suit your budget.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🤝</div>
+                    <h3>Customer Focus</h3>
+                    <p>Your satisfaction is our priority with personalized service and support.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">📋</div>
+                    <h3>Full Compliance</h3>
+                    <p>Certified and compliant with all regulatory requirements and safety standards.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🚚</div>
+                    <h3>Flexible Delivery</h3>
+                    <p>Scheduled or emergency deliveries to meet your specific needs and timelines.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">🌍</div>
+                    <h3>Local Support</h3>
+                    <p>100% Black Female-owned business committed to community empowerment.</p>
+                </div>
+                <div class="why-card">
+                    <div class="why-icon">💼</div>
+                    <h3>Professional Team</h3>
+                    <p>Experienced and qualified professionals dedicated to excellence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="cta-container">
+            <h2>Ready to Partner With Us?</h2>
+            <p>Experience reliable, quality fuel supply services that keep your operations running smoothly. Contact us today to discuss your requirements and receive a customized quote.</p>
+            <a href="#contact" class="btn">Get a Quote Today</a>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <div style="font-weight: bold;">Call Us</div>
+                        <div>062 926 9028</div>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">✉️</div>
+                    <div>
+                        <div style="font-weight: bold;">Email Us</div>
+                        <div>onalennajohnny078@gmail.com</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 EWoman Power Trading & Projects. All rights reserved.</p>
+        <p style="margin-top: 0.5rem; color: #ccc;">Empowering Communities Through Quality Fuel Solutions</p>
+    </footer>
+</body>
+</html>
