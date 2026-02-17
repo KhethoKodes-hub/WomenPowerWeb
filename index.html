@@ -2,557 +2,1215 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>EWoman Power Trading & Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *, *::before, *::after {
+            margin: 0; padding: 0; box-sizing: border-box;
         }
+
+        :root {
+            --rose:       #ff2d5b;
+            --rose-deep:  #c4003a;
+            --crimson:    #8B0033;
+            --sky:        #5AC8FA;
+            --sky-light:  #a8e6ff;
+            --navy:       #050e1f;
+            --navy-mid:   #0c1f3f;
+            --navy-glass: rgba(5, 14, 31, 0.85);
+            --white:      #ffffff;
+            --offwhite:   #f4f6ff;
+            --glass-1:    rgba(255,255,255,0.07);
+            --glass-2:    rgba(255,255,255,0.13);
+            --glass-3:    rgba(255,255,255,0.20);
+            --border:     rgba(255,255,255,0.14);
+            --glow-rose:  0 0 40px rgba(255,45,91,0.35);
+            --glow-sky:   0 0 40px rgba(90,200,250,0.3);
+            --shadow:     0 8px 48px rgba(0,0,0,0.55);
+            --f-display:  'Cormorant Garamond', Georgia, serif;
+            --f-body:     'DM Sans', sans-serif;
+        }
+
+        html { scroll-behavior: smooth; }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            line-height: 1.6;
+            font-family: var(--f-body);
+            background: var(--navy);
+            color: var(--white);
             overflow-x: hidden;
+            cursor: none;
         }
 
-        /* Navigation */
+        /* ── Custom cursor (disable on mobile) ── */
+        @media (min-width: 1025px) {
+            .cursor {
+                width: 10px; height: 10px;
+                background: var(--rose);
+                border-radius: 50%;
+                position: fixed; top: 0; left: 0;
+                pointer-events: none; z-index: 9999;
+                transition: transform 0.08s ease;
+            }
+            .cursor-ring {
+                width: 36px; height: 36px;
+                border: 1.5px solid rgba(255,45,91,0.6);
+                border-radius: 50%;
+                position: fixed; top: 0; left: 0;
+                pointer-events: none; z-index: 9998;
+                transition: transform 0.18s ease, width 0.2s, height 0.2s, border-color 0.2s;
+            }
+            body:has(a:hover) .cursor-ring,
+            body:has(.btn:hover) .cursor-ring,
+            body:has(.btn-primary:hover) .cursor-ring {
+                width: 56px; height: 56px;
+                border-color: var(--sky);
+            }
+        }
+
+        /* ── Noise overlay ── */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("assets/womenLogo.jpeg");
+            opacity: 0.4; pointer-events: none; z-index: 0;
+        }
+
+        /* ══════════ NAV - FULLY RESPONSIVE ══════════ */
         nav {
-            position: fixed;
-            width: 100%;
-            background: rgba(139, 0, 139, 0.95);
-            padding: 1rem 5%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            position: fixed; width: 100%; z-index: 1000;
+            padding: 0.8rem 5%;
+            background: rgba(5,14,31,0.6);
+            backdrop-filter: blur(20px) saturate(160%);
+            border-bottom: 1px solid var(--border);
+            transition: padding 0.3s ease, background 0.3s ease;
         }
-
-        nav .container {
-            display: flex;
-            justify-content: space-between;
+        nav.scrolled {
+            padding: 0.5rem 5%;
+            background: rgba(5,14,31,0.95);
+        }
+        .nav-inner {
+            max-width: 1360px; margin: 0 auto;
+            display: flex; justify-content: space-between; align-items: center;
+            position: relative;
+        }
+        
+        /* Logo styling - improved for all screens */
+        .logo-wrap {
+            display: flex; align-items: center; gap: 0.5rem; text-decoration: none;
+            z-index: 1001;
+        }
+        .logo-badge {
+            width: 50px; height: 50px;
+            background: linear-gradient(135deg, var(--rose), var(--crimson));
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: var(--glow-rose);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+            overflow: hidden;
+            padding: 3px;
+        }
+        .logo-badge img {
+            width: 100%; height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+        .logo-wrap:hover .logo-badge {
+            transform: rotate(5deg) scale(1.05);
+            box-shadow: 0 0 60px rgba(255,45,91,0.6);
+        }
+        .logo-label {
+            font-family: var(--f-display); font-size: 1rem; font-weight: 600; letter-spacing: 0.04em;
+            background: linear-gradient(90deg, var(--rose), var(--sky-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        
+        /* Desktop navigation */
+        .nav-links { 
+            display: flex; 
+            list-style: none; 
+            gap: 0.3rem; 
             align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
         }
-
-        nav .logo {
-            color: #FFD700;
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 1px;
+        .nav-links a {
+            color: rgba(255,255,255,0.75); text-decoration: none;
+            font-size: 0.875rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+            padding: 0.5rem 1rem; border-radius: 8px;
+            position: relative; transition: color 0.25s ease;
+            white-space: nowrap;
         }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
+        .nav-links a::after {
+            content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+            width: 0; height: 2px; background: linear-gradient(90deg, var(--rose), var(--sky));
+            border-radius: 1px; transition: width 0.3s ease;
         }
+        .nav-links a:hover { color: var(--white); }
+        .nav-links a:hover::after { width: 60%; }
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
+        /* Hamburger menu - mobile only */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            position: relative;
+        }
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--rose), var(--sky));
+            border-radius: 2px;
             transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
         }
 
-        nav a:hover {
-            background: rgba(255, 215, 0, 0.2);
-            color: #FFD700;
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
+        /* Mobile navigation overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100vh;
-            background: linear-gradient(rgba(139, 0, 139, 0.7), rgba(75, 0, 130, 0.8)), 
-                        url('https://images.unsplash.com/photo-1545262810-77515befe149?w=1600') center/cover;
+            background: rgba(5,14,31,0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            color: white;
-            position: relative;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
-
-        .hero::before {
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-nav-links {
+            list-style: none;
+            text-align: center;
+            transform: translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
+        }
+        .mobile-nav-overlay.active .mobile-nav-links {
+            transform: translateY(0);
+        }
+        .mobile-nav-links li {
+            margin: 2rem 0;
+        }
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-family: var(--f-display);
+            font-weight: 600;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+        .mobile-nav-links a::after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(to bottom, transparent, white);
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--rose), var(--sky));
+            transition: width 0.3s ease;
+        }
+        .mobile-nav-links a:hover::after,
+        .mobile-nav-links a:focus::after {
+            width: 80%;
+        }
+
+        /* ══════════ HERO - MOBILE OPTIMIZED ══════════ */
+        .hero {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center;
+            position: relative; overflow: hidden;
+            background: var(--navy);
+            padding: 5rem 1rem 2rem;
+        }
+        .hero-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 50% 0%,   rgba(255,45,91,0.18)   0%, transparent 65%),
+                radial-gradient(ellipse 60% 50% at 80% 80%,  rgba(90,200,250,0.12)  0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 10% 60%,  rgba(196,0,58,0.1)     0%, transparent 55%),
+                linear-gradient(170deg, #060f22 0%, #0a1830 50%, #060f22 100%);
+        }
+        /* Animated orbit rings - hidden on mobile for performance */
+        @media (min-width: 768px) {
+            .orbit { position: absolute; border-radius: 50%; border: 1px solid; pointer-events: none; }
+            .orbit-1 {
+                width: 600px; height: 600px; top: 50%; left: 50%;
+                transform: translate(-50%,-50%);
+                border-color: rgba(255,45,91,0.08);
+                animation: spin 30s linear infinite;
+            }
+            .orbit-2 {
+                width: 900px; height: 900px; top: 50%; left: 50%;
+                transform: translate(-50%,-50%);
+                border-color: rgba(90,200,250,0.06);
+                animation: spin 50s linear infinite reverse;
+            }
+            .orbit-3 {
+                width: 1200px; height: 1200px; top: 50%; left: 50%;
+                transform: translate(-50%,-50%);
+                border-color: rgba(255,255,255,0.03);
+                animation: spin 70s linear infinite;
+            }
+            @keyframes spin { to { transform: translate(-50%,-50%) rotate(360deg); } }
         }
 
         .hero-content {
-            max-width: 900px;
-            padding: 2rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            color: #FFD700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-        }
-
-        .hero p {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 1rem 2.5rem;
-            background: #FFD700;
-            color: #8B008B;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6);
-            background: #FFA500;
-        }
-
-        /* About Section */
-        .about {
-            padding: 5rem 5%;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-        }
-
-        .about-container {
-            max-width: 1200px;
+            position: relative; z-index: 2;
+            max-width: 860px; 
+            padding: 2rem 1.5rem;
+            background: var(--glass-1);
+            backdrop-filter: blur(24px) saturate(140%);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.08);
+            animation: fadeUp 1s cubic-bezier(.16,1,.3,1) both;
+            width: 95%;
             margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
+        }
+        @media (min-width: 640px) {
+            .hero-content {
+                padding: 3rem 2.5rem;
+                border-radius: 24px;
+            }
+        }
+        .hero-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase;
+            color: var(--sky-light); margin-bottom: 1rem;
+        }
+        .hero h1 {
+            font-family: var(--f-display); 
+            font-size: clamp(2rem, 8vw, 4.8rem);
+            font-weight: 700; line-height: 1.1; letter-spacing: -0.01em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, var(--rose) 40%, var(--sky-light) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .hero-sub {
+            font-size: 0.9rem; font-weight: 300; color: rgba(255,255,255,0.72);
+            margin-bottom: 2rem; letter-spacing: 0.02em;
+            line-height: 1.6;
+        }
+        @media (min-width: 640px) {
+            .hero-sub {
+                font-size: 1.1rem;
+            }
+        }
+        .hero-actions { 
+            display: flex; 
+            gap: 0.8rem; 
+            justify-content: center; 
+            flex-wrap: wrap; 
+            flex-direction: column;
             align-items: center;
         }
+        @media (min-width: 480px) {
+            .hero-actions {
+                flex-direction: row;
+            }
+        }
 
-        .about-image {
-            height: 400px;
-            background: linear-gradient(rgba(139, 0, 139, 0.5), rgba(75, 0, 130, 0.5)),
-                        url('https://images.unsplash.com/photo-1628672795205-4d98d4527796?w=800') center/cover;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        .btn-primary, .btn-ghost {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.8rem;
+            width: 100%;
+            max-width: 220px;
+            text-decoration: none;
+            border-radius: 50px; 
+            font-size: 0.85rem; 
+            font-weight: 500; 
+            letter-spacing: 0.04em;
+            transition: all 0.25s ease;
+            white-space: nowrap;
+        }
+        @media (min-width: 480px) {
+            .btn-primary, .btn-ghost {
+                width: auto;
+            }
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+            color: white;
+            box-shadow: var(--glow-rose);
+            position: relative; overflow: hidden;
+        }
+        .btn-primary::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.18), transparent);
+            opacity: 0; transition: opacity 0.25s;
+        }
+        .btn-primary:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 0 70px rgba(255,45,91,0.5); 
+        }
+        .btn-primary:hover::before { opacity: 1; }
+        .btn-primary .arrow { transition: transform 0.25s ease; }
+        .btn-primary:hover .arrow { transform: translateX(4px); }
+
+        .btn-ghost {
+            background: var(--glass-2);
+            backdrop-filter: blur(10px);
+            color: rgba(255,255,255,0.85);
+            border: 1px solid var(--border);
+        }
+        .btn-ghost:hover {
+            background: var(--glass-3);
+            border-color: var(--sky);
+            color: var(--sky-light);
+            transform: translateY(-3px);
+            box-shadow: var(--glow-sky);
+        }
+
+        /* ══════════ STATS STRIP - MOBILE RESPONSIVE ══════════ */
+        .stats-strip {
+            background: rgba(255,255,255,0.03);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+        }
+        .stats-inner {
+            max-width: 1360px; margin: 0 auto; 
+            padding: 1.5rem 1rem;
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .stats-inner {
+                display: flex; 
+                justify-content: space-around; 
+                flex-wrap: wrap; 
+                gap: 2rem;
+                padding: 2rem 5%;
+            }
+        }
+        .stat-item { text-align: center; }
+        .stat-num {
+            font-family: var(--f-display); 
+            font-size: clamp(1.8rem, 5vw, 2.8rem); 
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--rose), var(--sky));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .stat-label {
+            font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+            color: rgba(255,255,255,0.5); margin-top: 0.2rem;
+        }
+        @media (min-width: 640px) {
+            .stat-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        /* ══════════ SECTION SHARED - MOBILE OPTIMIZED ══════════ */
+        section { 
+            position: relative; 
+            overflow: hidden; 
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        @media (min-width: 768px) {
+            section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+        }
+
+        .section-tag {
+            font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase;
+            color: var(--rose); margin-bottom: 0.6rem;
+        }
+        .section-heading {
+            font-family: var(--f-display); 
+            font-size: clamp(1.8rem, 6vw, 3rem);
+            font-weight: 700; line-height: 1.1;
+        }
+        .rule {
+            display: block; width: 48px; height: 3px; margin: 1rem 0;
+            background: linear-gradient(90deg, var(--rose), var(--sky));
+            border-radius: 2px;
+        }
+
+        /* ══════════ ABOUT - MOBILE FRIENDLY ══════════ */
+        .about {
+            padding: 4rem 1rem;
+            background: linear-gradient(160deg, #070e1e 0%, #0c1830 60%, #060e1c 100%);
+        }
+        @media (min-width: 768px) {
+            .about {
+                padding: 8rem 5%;
+            }
+        }
+        .about-bg {
+            position: absolute;
+            width: 700px; height: 700px; top: -200px; right: -200px;
+            background: radial-gradient(circle, rgba(90,200,250,0.07) 0%, transparent 65%);
+            pointer-events: none;
+        }
+        .about-inner {
+            max-width: 1360px; margin: 0 auto;
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 3rem; 
+            align-items: center;
+        }
+        @media (min-width: 1024px) {
+            .about-inner {
+                grid-template-columns: 1fr 1fr; 
+                gap: 5rem;
+            }
+        }
+        .about-visual {
+            position: relative;
+            height: 300px;
+        }
+        @media (min-width: 640px) {
+            .about-visual {
+                height: 400px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .about-visual {
+                height: 480px;
+            }
+        }
+        .about-card-main {
+            position: absolute; inset: 0;
+            background: linear-gradient(135deg, rgba(255,45,91,0.2), rgba(90,200,250,0.1), rgba(5,14,31,0.4));
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: transform 0.5s cubic-bezier(.16,1,.3,1), box-shadow 0.4s;
+        }
+        .about-card-main img {
+            width: 100%; height: 100%; object-fit: cover; opacity: 0.55; mix-blend-mode: luminosity;
+        }
+        .about-pill {
+            position: absolute; bottom: -10px; right: -10px;
+            background: var(--glass-2); backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 20px;
+            padding: 0.8rem 1.2rem;
+            box-shadow: var(--shadow);
             transition: transform 0.3s ease;
         }
-
-        .about-image:hover {
-            transform: scale(1.05);
+        @media (min-width: 640px) {
+            .about-pill {
+                bottom: -20px; right: -24px;
+                padding: 1rem 1.6rem;
+            }
+        }
+        .about-pill-num {
+            font-family: var(--f-display); 
+            font-size: clamp(1.5rem, 5vw, 2.2rem); 
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--rose), var(--sky));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        .about-text p {
+            color: rgba(255,255,255,0.68); line-height: 1.7; margin-bottom: 1.2rem; 
+            font-size: 0.9rem;
+        }
+        @media (min-width: 640px) {
+            .about-text p {
+                font-size: 0.97rem;
+            }
+        }
+        .badge-row { 
+            display: flex; 
+            gap: 0.5rem; 
+            flex-wrap: wrap; 
+            margin-top: 1.5rem; 
+            justify-content: flex-start;
+        }
+        .badge {
+            padding: 0.25rem 0.7rem;
+            background: var(--glass-1);
+            border: 1px solid var(--border); 
+            border-radius: 50px;
+            font-size: 0.65rem; 
+            color: rgba(255,255,255,0.65); 
+            letter-spacing: 0.06em;
+            transition: all 0.25s ease;
+        }
+        @media (min-width: 640px) {
+            .badge {
+                padding: 0.35rem 0.9rem;
+                font-size: 0.75rem;
+            }
         }
 
-        .section-title {
-            font-size: 2.5rem;
-            color: #8B008B;
-            margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60%;
-            height: 4px;
-            background: #FFD700;
-        }
-
-        /* Services Section */
+        /* ══════════ SERVICES - MOBILE GRID ══════════ */
         .services {
-            padding: 5rem 5%;
-            background: linear-gradient(rgba(139, 0, 139, 0.05), rgba(255, 215, 0, 0.05)),
-                        url('https://images.unsplash.com/photo-1615906655593-ad0386982a0f?w=1600') center/cover fixed;
-            position: relative;
+            padding: 4rem 1rem;
+            background: var(--navy);
         }
-
-        .services::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.92);
+        @media (min-width: 768px) {
+            .services {
+                padding: 8rem 5%;
+            }
         }
-
-        .services-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
+        .services-inner { max-width: 1360px; margin: 0 auto; position: relative; z-index: 1; }
+        .services-head { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 1rem; 
+            margin-bottom: 2.5rem; 
         }
-
+        @media (min-width: 1024px) {
+            .services-head { 
+                flex-direction: row; 
+                justify-content: space-between; 
+                align-items: flex-end; 
+                margin-bottom: 3.5rem; 
+            }
+        }
         .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            .services-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            .services-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
-        .service-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(139, 0, 139, 0.1);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(139, 0, 139, 0.3);
-            border-color: #FFD700;
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #8B008B, #4B0082);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 2rem;
-            transition: all 0.3s ease;
-        }
-
-        .service-card:hover .service-icon {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            transform: rotate(360deg);
-        }
-
-        .service-card h3 {
-            color: #8B008B;
-            margin-bottom: 1rem;
-        }
-
-        /* Values Section */
+        /* ══════════ VALUES - MOBILE GRID ══════════ */
         .values {
-            padding: 5rem 5%;
-            background: linear-gradient(135deg, #8B008B 0%, #4B0082 100%);
-            color: white;
+            padding: 4rem 1rem;
+            background: linear-gradient(160deg, #0c1830 0%, #080f22 100%);
+        }
+        @media (min-width: 768px) {
+            .values {
+                padding: 8rem 5%;
+            }
+        }
+        .values-inner { max-width: 1360px; margin: 0 auto; }
+        .values-header { 
+            text-align: center; 
+            max-width: 600px; 
+            margin: 0 auto 3rem; 
+        }
+        .values-header .rule { margin: 1.2rem auto; }
+        .values-grid {
+            display: grid; 
+            grid-template-columns: repeat(2, 1fr); 
+            gap: 0.8rem;
+        }
+        @media (min-width: 640px) {
+            .values-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 1rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .values-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        .value-card {
+            padding: 1.2rem 0.8rem;
+            background: var(--glass-1);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(.16,1,.3,1);
+        }
+        @media (min-width: 640px) {
+            .value-card {
+                padding: 1.6rem 1.4rem;
+            }
+        }
+        .value-icon {
+            font-size: 1.4rem; margin-bottom: 0.6rem; display: block;
+        }
+        .value-card h4 {
+            font-family: var(--f-display); 
+            font-size: 0.9rem; 
+            font-weight: 600;
+            color: var(--white); 
+            margin-bottom: 0.2rem;
+        }
+        @media (min-width: 640px) {
+            .value-card h4 {
+                font-size: 1.05rem;
+            }
+        }
+        .value-card p {
+            font-size: 0.65rem; color: rgba(255,255,255,0.45);
+        }
+        @media (min-width: 640px) {
+            .value-card p {
+                font-size: 0.75rem;
+            }
         }
 
-        .values-container {
-            max-width: 1200px;
-            margin: 0 auto;
+        /* ══════════ CONTACT - MOBILE STACK ══════════ */
+        .contact {
+            padding: 4rem 1rem;
+            background: var(--navy);
+        }
+        @media (min-width: 768px) {
+            .contact {
+                padding: 8rem 5%;
+            }
+        }
+        .contact-inner {
+            max-width: 1360px; margin: 0 auto;
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 3rem;
+            position: relative; z-index: 1;
+        }
+        @media (min-width: 1024px) {
+            .contact-inner {
+                grid-template-columns: 1fr 1.2fr;
+                gap: 5rem;
+            }
+        }
+        .contact-left p {
+            margin: 1rem 0 2rem;
+            color: rgba(255,255,255,0.6); line-height: 1.7; font-size: 0.9rem;
+        }
+        .contact-items { display: flex; flex-direction: column; gap: 0.8rem; }
+        .contact-item {
+            display: flex; align-items: flex-start; gap: 0.8rem;
+            padding: 1rem;
+            background: var(--glass-1);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            transition: all 0.3s ease;
+        }
+        @media (min-width: 640px) {
+            .contact-item {
+                padding: 1.3rem 1.5rem;
+            }
+        }
+        .c-icon {
+            width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px;
+            background: linear-gradient(135deg, rgba(255,45,91,0.3), rgba(90,200,250,0.15));
+            border: 1px solid rgba(255,45,91,0.25);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+        .c-label {
+            font-size: 0.65rem; letter-spacing: 0.12em; text-transform: uppercase;
+            color: var(--sky-light); margin-bottom: 0.15rem;
+        }
+        .c-value {
+            font-size: 0.8rem; color: rgba(255,255,255,0.75); line-height: 1.5;
+        }
+        @media (min-width: 640px) {
+            .c-value {
+                font-size: 0.88rem;
+            }
+        }
+
+        /* Company Card */
+        .company-card {
+            background: var(--glass-1);
+            backdrop-filter: blur(28px) saturate(150%);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 1.8rem;
+            box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        @media (min-width: 640px) {
+            .company-card {
+                padding: 2.5rem;
+            }
+        }
+        .company-card h3 {
+            font-family: var(--f-display); 
+            font-size: 1.3rem; 
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, var(--white), var(--sky-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+        }
+        @media (min-width: 640px) {
+            .company-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+        .info-table { width: 100%; border-collapse: collapse; }
+        .info-table td {
+            padding: 0.6rem 0; font-size: 0.8rem;
+            transition: color 0.2s;
+        }
+        @media (min-width: 640px) {
+            .info-table td {
+                padding: 0.85rem 0;
+                font-size: 0.875rem;
+            }
+        }
+        .info-table .info-key {
+            color: var(--sky-light); font-weight: 500; width: 45%;
+            letter-spacing: 0.03em;
+        }
+        .info-table .info-val {
+            color: rgba(255,255,255,0.65); text-align: right;
+        }
+
+        /* ══════════ FOOTER ══════════ */
+        footer {
+            background: rgba(0,0,0,0.5);
+            border-top: 1px solid var(--border);
+            padding: 2rem 1rem; 
             text-align: center;
         }
-
-        .values-container .section-title {
-            color: #FFD700;
-        }
-
-        .values-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .value-item {
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .value-item:hover {
-            background: rgba(255, 215, 0, 0.2);
-            transform: scale(1.05);
-        }
-
-        .value-item h4 {
-            color: #FFD700;
-            font-size: 1.3rem;
+        .footer-logo {
+            font-family: var(--f-display); 
+            font-size: 1.2rem; 
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--rose), var(--sky-light));
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
             margin-bottom: 0.5rem;
         }
-
-        /* Contact Section */
-        .contact {
-            padding: 5rem 5%;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)),
-                        url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1600') center/cover fixed;
-            color: white;
+        @media (min-width: 640px) {
+            .footer-logo {
+                font-size: 1.5rem;
+            }
         }
-
-        .contact-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-        }
-
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: start;
-            gap: 1rem;
-            padding: 1.5rem;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .contact-item:hover {
-            background: rgba(139, 0, 139, 0.3);
-            transform: translateX(10px);
-        }
-
-        .contact-icon {
-            width: 50px;
-            height: 50px;
-            background: #FFD700;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: #8B008B;
-            flex-shrink: 0;
-        }
-
-        .company-info {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-        }
-
-        .company-info h3 {
-            color: #FFD700;
-            margin-bottom: 1rem;
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .info-label {
-            color: #FFD700;
-            font-weight: bold;
-        }
-
-        /* Footer */
-        footer {
-            background: #1a1a1a;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-        }
-
         footer p {
-            color: #FFD700;
+            font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 0.3rem;
+            line-height: 1.5;
         }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+        @media (min-width: 640px) {
+            footer p {
+                font-size: 0.8rem;
             }
         }
 
+        /* ══════════ ANIMATIONS ══════════ */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(32px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .reveal {
+            opacity: 0; transform: translateY(28px);
+            transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1);
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: 0.1s; }
+        .reveal-d2 { transition-delay: 0.2s; }
+        .reveal-d3 { transition-delay: 0.3s; }
+
+        /* Responsive breakpoints */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .logo-label {
+                display: none;
+            }
+            .logo-badge {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .mobile-nav-overlay {
+                display: none;
+            }
+            .logo-label {
+                display: block;
+            }
+            .logo-badge {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* Touch-friendly improvements */
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
+            .btn-primary, .btn-ghost {
+                padding: 0.85rem 1.5rem;
+                font-size: 0.9rem;
             }
-
-            nav ul {
-                flex-direction: column;
-                gap: 0.5rem;
+            .service-card {
+                padding: 1.8rem;
             }
-
-            .about-container,
-            .contact-container {
-                grid-template-columns: 1fr;
+            .service-card h3 {
+                font-size: 1.2rem;
             }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">EWoman Power T&P</div>
-            <ul>
+
+    <!-- Custom Cursor (only visible on desktop) -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+
+    <!-- ── NAV with Hamburger Menu ── -->
+    <nav id="nav">
+        <div class="nav-inner">
+            <a href="#home" class="logo-wrap">
+                <div class="logo-badge">
+                   
+                </div>
+                <span class="logo-label">EWOMAN POWER</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="contact.html">Contact</a></li>
             </ul>
+
+            <!-- Hamburger Icon (mobile only) -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <ul class="mobile-nav-links">
+            <li><a href="#home" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="about.html" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="services.html" onclick="closeMobileMenu()">Services</a></li>
+            <li><a href="contact.html" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- ── HERO ── -->
     <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="orbit orbit-1"></div>
+        <div class="orbit orbit-2"></div>
+        <div class="orbit orbit-3"></div>
+
         <div class="hero-content">
-            <h1>EWoman Power Trading & Projects</h1>
-            <p>Your Trusted Independent Fuel Service Provider</p>
-            <a href="#contact" class="btn">Get in Touch</a>
+            <div class="hero-eyebrow">Independent Fuel Service Provider</div>
+            <h1>EWoman Power<br>Trading &amp; Projects</h1>
+            <p class="hero-sub">Delivering quality, reliability, and excellence across South Africa — since 2018.</p>
+            <div class="hero-actions">
+                <a href="#services" class="btn-primary">
+                    Our Services <span class="arrow">→</span>
+                </a>
+                <a href="#contact" class="btn-ghost">
+                    Get In Touch
+                </a>
+            </div>
         </div>
     </section>
 
+    <!-- ── STATS STRIP ── -->
+    <div class="stats-strip">
+        <div class="stats-inner">
+            <div class="stat-item reveal">
+                <div class="stat-num">2018</div>
+                <div class="stat-label">Established</div>
+            </div>
+            <div class="stat-item reveal reveal-d1">
+                <div class="stat-num">100%</div>
+                <div class="stat-label">Black Female Owned</div>
+            </div>
+            <div class="stat-item reveal reveal-d2">
+                <div class="stat-num">3</div>
+                <div class="stat-label">Core Services</div>
+            </div>
+            <div class="stat-item reveal reveal-d3">
+                <div class="stat-num">ZA</div>
+                <div class="stat-label">South Africa Wide</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── ABOUT ── -->
     <section id="about" class="about">
-        <div class="about-container">
-            <div>
-                <h2 class="section-title">About Us</h2>
-                <p style="margin-bottom: 1rem;">EWoman Power Trading and Projects was established on October 2nd, 2018, by Onalenna Caroline Johnny. We are a 100% black female-owned company dedicated to excellence in fuel supply services.</p>
-                <p style="margin-bottom: 1rem;"><strong>Our Mission:</strong> We maintain high levels of customer satisfaction while forming sound relationships for the benefit of all parties. We contribute to employment growth in South Africa and establish successful partnerships with our clients.</p>
-                <p><strong>Our Vision:</strong> To provide high-quality service of choice that is reliable and distinctly different from competitors. We strive to be recognised as the best in all industries and sectors we operate in while pursuing excellence.</p>
+        <div class="about-bg"></div>
+        <div class="about-inner">
+            <div class="about-visual reveal">
+                <div class="about-card-main">
+                    <img src="https://images.unsplash.com/photo-1545262810-77515befe149?w=800&auto=format&fit=crop&q=70" alt="Fuel operations" loading="lazy" />
+                </div>
+                <div class="about-pill">
+                    <div class="about-pill-num">6+</div>
+                    <div class="about-pill-text">Years Serving SA</div>
+                </div>
             </div>
-            <div class="about-image"></div>
+            <div class="about-text reveal reveal-d1">
+                <div class="section-tag">About Us</div>
+                <h2 class="section-heading">Empowering Communities<br>Through Fuel Solutions</h2>
+                <span class="rule"></span>
+                <p>EWoman Power Trading and Projects was established on <strong>October 2nd, 2018</strong>, by Onalenna Caroline Johnny. We are a <strong>100% black female-owned company</strong> dedicated to excellence in fuel supply services across South Africa.</p>
+                <p><strong>Our Mission:</strong> We maintain high levels of customer satisfaction while forming sound relationships for the benefit of all parties — contributing to employment growth and establishing successful partnerships.</p>
+                <p><strong>Our Vision:</strong> To provide high-quality service that is reliable and distinctly different from competitors, striving to be recognised as the best in every industry and sector we operate in.</p>
+                <div class="badge-row">
+                    <span class="badge">BBBEE Certified</span>
+                    <span class="badge">Compliant Provider</span>
+                    <span class="badge">Government Supply</span>
+                    <span class="badge">Private Sector</span>
+                </div>
+            </div>
         </div>
     </section>
 
+    <!-- ── SERVICES ── -->
     <section id="services" class="services">
-        <div class="services-container">
-            <h2 class="section-title">Our Services</h2>
-            <p style="max-width: 800px; margin: 1rem 0;">As an independent and compliant fuel service provider, we deliver quality products and services to organizations and departments across South Africa.</p>
+        <div class="services-bg"></div>
+        <div class="services-inner">
+            <div class="services-head">
+                <div class="reveal">
+                    <div class="section-tag">What We Offer</div>
+                    <h2 class="section-heading">Our Services</h2>
+                </div>
+                <p class="reveal reveal-d1" style="max-width:380px; color:rgba(255,255,255,0.5); font-size:0.9rem; line-height:1.7;">As an independent and compliant fuel service provider, we deliver quality products to organisations across South Africa.</p>
+            </div>
             <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">⛽</div>
+                <div class="service-card reveal">
+                    <div class="service-icon-wrap">⛽</div>
                     <h3>Petrol Supply</h3>
-                    <p>Reliable petrol supply services for government, private sectors, and households with timely delivery and competitive pricing.</p>
+                    <p>Reliable petrol supply for government departments, private sectors, and households — with competitive pricing and timely delivery.</p>
+                    <span class="card-arrow">Learn more →</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">🚛</div>
+                <div class="service-card reveal reveal-d1">
+                    <div class="service-icon-wrap">🚛</div>
                     <h3>Diesel Supply</h3>
-                    <p>High-quality diesel supply to power your operations. We ensure consistent availability and prompt delivery schedules.</p>
+                    <p>High-quality diesel to power your operations. Consistent availability and prompt delivery schedules tailored to your needs.</p>
+                    <span class="card-arrow">Learn more →</span>
                 </div>
-                <div class="service-card">
-                    <div class="service-icon">🛢️</div>
+                <div class="service-card reveal reveal-d2">
+                    <div class="service-icon-wrap">🛢️</div>
                     <h3>Lubricants</h3>
-                    <p>Premium lubricants for various applications. We provide comprehensive solutions for all your lubrication needs.</p>
+                    <p>Premium lubricants for industrial and commercial applications. Comprehensive solutions for all your lubrication requirements.</p>
+                    <span class="card-arrow">Learn more →</span>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ── VALUES ── -->
     <section id="values" class="values">
-        <div class="values-container">
-            <h2 class="section-title">Our Core Values</h2>
-            <p style="max-width: 800px; margin: 1rem auto 0;">These principles guide everything we do and define who we are as a company.</p>
+        <div class="values-inner">
+            <div class="values-header reveal">
+                <div class="section-tag">Who We Are</div>
+                <h2 class="section-heading">Our Core Values</h2>
+                <span class="rule"></span>
+                <p style="color:rgba(255,255,255,0.5); font-size:0.9rem; line-height:1.7;">These principles guide every decision we make and define the character of our company.</p>
+            </div>
             <div class="values-grid">
-                <div class="value-item">
-                    <h4>Team Work</h4>
-                    <p>Collaboration drives success</p>
-                </div>
-                <div class="value-item">
-                    <h4>Customer Care</h4>
-                    <p>Your satisfaction is our priority</p>
-                </div>
-                <div class="value-item">
-                    <h4>Integrity</h4>
-                    <p>Honest and ethical practices</p>
-                </div>
-                <div class="value-item">
-                    <h4>Quality Service</h4>
-                    <p>Excellence in every delivery</p>
-                </div>
-                <div class="value-item">
-                    <h4>Employment</h4>
-                    <p>Creating opportunities</p>
-                </div>
-                <div class="value-item">
-                    <h4>Accountability</h4>
-                    <p>Taking responsibility</p>
-                </div>
-                <div class="value-item">
-                    <h4>Trustworthiness</h4>
-                    <p>Building lasting relationships</p>
-                </div>
-                <div class="value-item">
-                    <h4>Reliability</h4>
-                    <p>Consistent and dependable</p>
-                </div>
+                <div class="value-card reveal"><span class="value-icon">🤝</span><h4>Team Work</h4><p>Collaboration drives success</p></div>
+                <div class="value-card reveal reveal-d1"><span class="value-icon">💎</span><h4>Customer Care</h4><p>Your satisfaction is our priority</p></div>
+                <div class="value-card reveal reveal-d2"><span class="value-icon">⚖️</span><h4>Integrity</h4><p>Honest and ethical practices</p></div>
+                <div class="value-card reveal reveal-d3"><span class="value-icon">🏆</span><h4>Quality Service</h4><p>Excellence in every delivery</p></div>
+                <div class="value-card reveal"><span class="value-icon">🌱</span><h4>Employment</h4><p>Creating opportunities</p></div>
+                <div class="value-card reveal reveal-d1"><span class="value-icon">🎯</span><h4>Accountability</h4><p>Taking responsibility</p></div>
+                <div class="value-card reveal reveal-d2"><span class="value-icon">🔒</span><h4>Trustworthiness</h4><p>Building lasting relationships</p></div>
+                <div class="value-card reveal reveal-d3"><span class="value-icon">⚡</span><h4>Reliability</h4><p>Consistent and dependable</p></div>
             </div>
         </div>
     </section>
 
+    <!-- ── CONTACT ── -->
     <section id="contact" class="contact">
-        <div class="contact-container">
-            <div class="contact-info">
-                <div>
-                    <h2 class="section-title">Get In Touch</h2>
-                    <p style="margin-bottom: 2rem;">Ready to partner with us? Reach out today and let's discuss how we can serve your fuel supply needs.</p>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📞</div>
-                    <div>
-                        <h4>Phone Numbers</h4>
-                        <p>062 926 9028<br>061 656 2443<br>083 502 0274</p>
+        <div class="contact-bg"></div>
+        <div class="contact-inner">
+            <div class="contact-left reveal">
+                <div class="section-tag">Contact</div>
+                <h2 class="section-heading">Let's Work<br>Together</h2>
+                <span class="rule"></span>
+                <p>Ready to partner with us? Reach out today and let's discuss how we can serve your fuel supply needs with excellence and reliability.</p>
+                <div class="contact-items">
+                    <div class="contact-item">
+                        <div class="c-icon">📞</div>
+                        <div>
+                            <div class="c-label">Phone Numbers</div>
+                            <div class="c-value">062 926 9028 &nbsp;·&nbsp; 061 656 2443<br>083 502 0274</div>
+                        </div>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">✉️</div>
-                    <div>
-                        <h4>Email</h4>
-                        <p>onalennajohnny078@gmail.com</p>
+                    <div class="contact-item">
+                        <div class="c-icon">✉️</div>
+                        <div>
+                            <div class="c-label">Email</div>
+                            <div class="c-value"><a href="mailto:onalennajohnny078@gmail.com" style="color:inherit; text-decoration:none;">onalennajohnny078@gmail.com</a></div>
+                        </div>
                     </div>
-                </div>
-                <div class="contact-item">
-                    <div class="contact-icon">📍</div>
-                    <div>
-                        <h4>Address</h4>
-                        <p>House No: 02 Wildeperdeberg<br>Phase 4, Kathu Rooisand<br>8446</p>
+                    <div class="contact-item">
+                        <div class="c-icon">📍</div>
+                        <div>
+                            <div class="c-label">Address</div>
+                            <div class="c-value">House No: 02 Wildeperdeberg<br>Phase 4, Kathu Rooisand, 8446</div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="company-info">
+
+            <div class="company-card reveal reveal-d1">
                 <h3>Company Information</h3>
-                <div class="info-row">
-                    <span class="info-label">CEO:</span>
-                    <span>Johnny O.C</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Registration:</span>
-                    <span>2018/522819/07</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Tax Reference:</span>
-                    <span>9251340239</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">BBBEE:</span>
-                    <span>100% Black Female Ownership</span>
-                </div>
-                <div class="info-row">
-                    <span class="info-label">Established:</span>
-                    <span>October 2, 2018</span>
+                <table class="info-table">
+                    <tr>
+                        <td class="info-key">CEO</td>
+                        <td class="info-val">Johnny O.C</td>
+                    </tr>
+                    <tr>
+                        <td class="info-key">Registration No.</td>
+                        <td class="info-val">2018/522819/07</td>
+                    </tr>
+                    <tr>
+                        <td class="info-key">Tax Reference</td>
+                        <td class="info-val">9251340239</td>
+                    </tr>
+                    <tr>
+                        <td class="info-key">Established</td>
+                        <td class="info-val">October 2, 2018</td>
+                    </tr>
+                    <tr>
+                        <td class="info-key">Location</td>
+                        <td class="info-val">Kathu, Northern Cape</td>
+                    </tr>
+                </table>
+                <div class="bbbee-badge">
+                    <div class="bbbee-dot"></div>
+                    <div class="bbbee-text">
+                        <strong>BBBEE Status:</strong> 100% Black Female Owned & Operated
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- ── FOOTER ── -->
     <footer>
-        <p>&copy; 2025 EWoman Power Trading & Projects. All rights reserved.</p>
-        <p style="margin-top: 0.5rem; color: #ccc;">Empowering Communities Through Quality Fuel Solutions</p>
+        <div class="footer-inner">
+            <div class="footer-logo">EWoman Power Trading &amp; Projects</div>
+            <div class="footer-rule"></div>
+            <p>&copy; 2025 EWoman Power Trading &amp; Projects. All rights reserved.</p>
+            <p style="margin-top:0.4rem;">Empowering Communities Through Quality Fuel Solutions &nbsp;·&nbsp; Kathu, South Africa</p>
+        </div>
     </footer>
+
+    <script>
+        // Custom cursor (only active on desktop)
+        if (window.innerWidth >= 1025) {
+            const cursor = document.getElementById('cursor');
+            const ring = document.getElementById('cursor-ring');
+            let mx = 0, my = 0, rx = 0, ry = 0;
+            
+            document.addEventListener('mousemove', e => { 
+                mx = e.clientX; 
+                my = e.clientY; 
+            });
+            
+            const animCursor = () => {
+                cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+                rx += (mx - rx) * 0.15;
+                ry += (my - ry) * 0.15;
+                ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+                requestAnimationFrame(animCursor);
+            };
+            animCursor();
+        }
+
+        // Nav scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            mobileNavOverlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (mobileNavOverlay.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function closeMobileMenu() {
+            hamburger.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        hamburger.addEventListener('click', toggleMobileMenu);
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Close menu on window resize if open (for responsive)
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1025 && mobileNavOverlay.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(e => {
+                if (e.isIntersecting) { 
+                    e.target.classList.add('visible'); 
+                    io.unobserve(e.target); 
+                }
+            });
+        }, { threshold: 0.12 });
+        
+        reveals.forEach(el => io.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

@@ -2,796 +2,1250 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact Us - EWoman Power T&P</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Contact Us — EWoman Power Trading & Projects</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --rose:       #ff2d5b;
+            --rose-deep:  #c4003a;
+            --crimson:    #8B0033;
+            --sky:        #5AC8FA;
+            --sky-light:  #a8e6ff;
+            --navy:       #050e1f;
+            --navy-mid:   #0c1f3f;
+            --navy-glass: rgba(5, 14, 31, 0.85);
+            --white:      #ffffff;
+            --glass-1:    rgba(255,255,255,0.06);
+            --glass-2:    rgba(255,255,255,0.11);
+            --glass-3:    rgba(255,255,255,0.18);
+            --border:     rgba(255,255,255,0.13);
+            --glow-rose:  0 0 40px rgba(255,45,91,0.35);
+            --glow-sky:   0 0 40px rgba(90,200,250,0.28);
+            --shadow:     0 8px 48px rgba(0,0,0,0.55);
+            --f-display:  'Cormorant Garamond', Georgia, serif;
+            --f-body:     'DM Sans', sans-serif;
         }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            color: #333;
-            line-height: 1.6;
-            overflow-x: hidden;
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: var(--f-body); 
+            background: var(--navy); 
+            color: var(--white); 
+            overflow-x: hidden; 
         }
 
-        /* Navigation */
-        nav {
-            position: fixed;
-            width: 100%;
-            background: rgba(139, 0, 139, 0.95);
-            padding: 1rem 5%;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        /* Custom cursor - desktop only */
+        @media (min-width: 1025px) {
+            .cursor { width: 10px; height: 10px; background: var(--rose); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9999; transition: transform 0.08s ease; }
+            .cursor-ring { width: 36px; height: 36px; border: 1.5px solid rgba(255,45,91,0.6); border-radius: 50%; position: fixed; top: 0; left: 0; pointer-events: none; z-index: 9998; transition: transform 0.18s ease, width 0.2s, height 0.2s, border-color 0.2s; }
+            body:has(a:hover) .cursor-ring, body:has(.btn-primary:hover) .cursor-ring, body:has(.submit-btn:hover) .cursor-ring { width: 56px; height: 56px; border-color: var(--sky); }
         }
 
-        nav .container {
-            display: flex;
+        /* ── Noise ── */
+        body::before { content: ''; position: fixed; inset: 0; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E"); opacity: 0.4; pointer-events: none; z-index: 0; }
+
+        /* ── NAV with Hamburger ── */
+        nav { 
+            position: fixed; width: 100%; z-index: 1000; 
+            padding: 0.8rem 5%; 
+            background: rgba(5,14,31,0.6); 
+            backdrop-filter: blur(20px) saturate(160%); 
+            border-bottom: 1px solid var(--border); 
+            transition: padding 0.3s ease, background 0.3s ease; 
+        }
+        nav.scrolled { 
+            padding: 0.5rem 5%; 
+            background: rgba(5,14,31,0.95); 
+        }
+        .nav-inner { 
+            max-width: 1360px; margin: 0 auto; 
+            display: flex; justify-content: space-between; align-items: center; 
+            position: relative;
+        }
+
+        /* Logo styling */
+        .logo-wrap { 
+            display: flex; align-items: center; gap: 0.5rem; text-decoration: none; 
+            z-index: 1001;
+        }
+        .logo-badge { 
+            width: 50px; height: 50px; 
+            background: linear-gradient(135deg, var(--rose), var(--crimson)); 
+            border-radius: 12px; 
+            display: flex; align-items: center; justify-content: center; 
+            box-shadow: var(--glow-rose); 
+            transition: transform 0.35s ease, box-shadow 0.35s ease; 
+            overflow: hidden;
+            padding: 3px;
+        }
+        .logo-badge img { 
+            width: 100%; height: 100%; 
+            object-fit: contain; 
+            border-radius: 8px; 
+        }
+        .logo-wrap:hover .logo-badge { 
+            transform: rotate(5deg) scale(1.05); 
+            box-shadow: 0 0 60px rgba(255,45,91,0.6); 
+        }
+        .logo-label { 
+            font-family: var(--f-display); font-size: 1rem; font-weight: 600; letter-spacing: 0.04em; 
+            background: linear-gradient(90deg, var(--rose), var(--sky-light)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; 
+        }
+
+        /* Desktop navigation */
+        .nav-links { 
+            display: flex; list-style: none; gap: 0.3rem; align-items: center; 
+        }
+        .nav-links a { 
+            color: rgba(255,255,255,0.7); text-decoration: none; 
+            font-size: 0.875rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase; 
+            padding: 0.5rem 0.9rem; border-radius: 8px; 
+            position: relative; transition: color 0.25s ease; 
+            white-space: nowrap;
+        }
+        .nav-links a::after { 
+            content: ''; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%); 
+            width: 0; height: 2px; background: linear-gradient(90deg, var(--rose), var(--sky)); 
+            border-radius: 1px; transition: width 0.3s ease; 
+        }
+        .nav-links a:hover { color: var(--white); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 60%; }
+        .nav-links a.active { color: var(--rose); }
+
+        /* Hamburger menu - mobile only */
+        .hamburger {
+            display: none;
+            flex-direction: column;
             justify-content: space-between;
-            align-items: center;
-            max-width: 1400px;
-            margin: 0 auto;
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            z-index: 1001;
+            position: relative;
         }
-
-        nav .logo {
-            color: #FFD700;
-            font-size: 1.8rem;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
+        .hamburger span {
+            display: block;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--rose), var(--sky));
+            border-radius: 2px;
             transition: all 0.3s ease;
-            padding: 0.5rem 1rem;
-            border-radius: 5px;
+        }
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(9px) rotate(45deg);
+        }
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-9px) rotate(-45deg);
         }
 
-        nav a:hover {
-            background: rgba(255, 215, 0, 0.2);
-            color: #FFD700;
-            transform: translateY(-2px);
-        }
-
-        /* Hero Section */
-        .hero {
-            height: 50vh;
-            background: linear-gradient(rgba(139, 0, 139, 0.85), rgba(75, 0, 130, 0.9)), 
-                        url('https://images.unsplash.com/photo-1423666639041-f56000c27a9a?w=1600') center/cover;
+        /* Mobile navigation overlay */
+        .mobile-nav-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(5,14,31,0.98);
+            backdrop-filter: blur(20px);
+            z-index: 999;
             display: flex;
             align-items: center;
             justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .mobile-nav-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        .mobile-nav-links {
+            list-style: none;
             text-align: center;
-            color: white;
-            position: relative;
+            transform: translateY(30px);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.1s;
         }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 100px;
-            background: linear-gradient(to bottom, transparent, white);
+        .mobile-nav-overlay.active .mobile-nav-links {
+            transform: translateY(0);
         }
-
-        .hero-content {
-            padding-top: 80px;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero h1 {
-            font-size: 4rem;
-            color: #FFD700;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.3rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        /* Contact Section */
-        .contact-main {
-            padding: 5rem 5%;
-            background: white;
-        }
-
-        .contact-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-        }
-
-        /* Contact Form */
-        .contact-form-section h2 {
-            font-size: 2.5rem;
-            color: #8B008B;
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-
-        .contact-form-section h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 0;
-            width: 60%;
-            height: 4px;
-            background: #FFD700;
-        }
-
-        .contact-form-section p {
+        .mobile-nav-links li {
             margin: 2rem 0;
-            font-size: 1.1rem;
-            line-height: 1.7;
+        }
+        .mobile-nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.8rem;
+            font-family: var(--f-display);
+            font-weight: 600;
+            position: relative;
+            padding: 0.5rem 1rem;
+            transition: all 0.3s ease;
+        }
+        .mobile-nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--rose), var(--sky));
+            transition: width 0.3s ease;
+        }
+        .mobile-nav-links a:hover::after,
+        .mobile-nav-links a.active::after {
+            width: 80%;
+        }
+        .mobile-nav-links a.active {
+            color: var(--rose);
+        }
+
+        /* ── HERO - Mobile Optimized ── */
+        .hero { 
+            min-height: 50vh; 
+            display: flex; align-items: center; justify-content: center; 
+            text-align: center; 
+            position: relative; overflow: hidden; 
+            background: var(--navy); 
+            padding: 5rem 1rem 2rem;
+        }
+        .hero-bg { 
+            position: absolute; inset: 0; 
+            background: radial-gradient(ellipse 90% 70% at 50% 0%, rgba(255,45,91,0.2) 0%, transparent 65%), 
+                        radial-gradient(ellipse 60% 50% at 80% 100%, rgba(90,200,250,0.1) 0%, transparent 60%), 
+                        linear-gradient(170deg, #060f22 0%, #0a1830 55%, #060f22 100%); 
+        }
+        .hero-grid { 
+            position: absolute; inset: 0; opacity: 0.04; 
+            background-image: linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), 
+                            linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px); 
+            background-size: 80px 80px; 
+        }
+        
+        /* Orbits - hidden on mobile for performance */
+        @media (min-width: 768px) {
+            .orbit { position: absolute; border-radius: 50%; border: 1px solid; pointer-events: none; }
+            .orbit-1 { width: 500px; height: 500px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-color: rgba(255,45,91,0.07); animation: orbitSpin 30s linear infinite; }
+            .orbit-2 { width: 800px; height: 800px; top: 50%; left: 50%; transform: translate(-50%,-50%); border-color: rgba(90,200,250,0.05); animation: orbitSpin 50s linear infinite reverse; }
+            @keyframes orbitSpin { to { transform: translate(-50%,-50%) rotate(360deg); } }
+        }
+
+        .hero-content { 
+            position: relative; z-index: 2; 
+            max-width: 800px; 
+            padding: 2rem 1.5rem; 
+            background: var(--glass-1); 
+            backdrop-filter: blur(24px) saturate(140%); 
+            border: 1px solid var(--border); 
+            border-radius: 20px; 
+            box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.07); 
+            animation: fadeUp 1s cubic-bezier(.16,1,.3,1) both; 
+            width: 95%;
+            margin: 0 auto;
+        }
+        @media (min-width: 640px) {
+            .hero-content {
+                padding: 3rem 2.5rem;
+                border-radius: 28px;
+            }
+        }
+        .hero-eyebrow { 
+            display: inline-flex; align-items: center; gap: 0.6rem; 
+            font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; 
+            color: var(--sky-light); margin-bottom: 1rem; 
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .hero-eyebrow::before, .hero-eyebrow::after { 
+            content: ''; height: 1px; 
+            background: linear-gradient(90deg, transparent, var(--sky-light), transparent); 
+            width: 30px; 
+        }
+        @media (min-width: 640px) {
+            .hero-eyebrow {
+                font-size: 0.68rem;
+            }
+            .hero-eyebrow::before, .hero-eyebrow::after {
+                width: 40px;
+            }
+        }
+        .hero h1 { 
+            font-family: var(--f-display); 
+            font-size: clamp(2.2rem, 8vw, 5.5rem); 
+            font-weight: 700; line-height: 1.05; 
+            background: linear-gradient(135deg, #fff 0%, var(--rose) 45%, var(--sky-light) 100%); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; 
+            margin-bottom: 0.8rem; 
+        }
+        .hero-sub { 
+            font-size: 0.9rem; color: rgba(255,255,255,0.65); font-weight: 300; letter-spacing: 0.02em; 
+            line-height: 1.6;
+        }
+        @media (min-width: 640px) {
+            .hero-sub {
+                font-size: 1.05rem;
+            }
+        }
+
+        /* ── SHARED ── */
+        section { 
+            position: relative; overflow: hidden; 
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+        @media (min-width: 768px) {
+            section {
+                padding-left: 5%;
+                padding-right: 5%;
+            }
+        }
+        .section-tag { 
+            font-size: 0.6rem; font-weight: 500; letter-spacing: 0.22em; text-transform: uppercase; 
+            color: var(--rose); margin-bottom: 0.6rem; 
+        }
+        @media (min-width: 640px) {
+            .section-tag {
+                font-size: 0.68rem;
+            }
+        }
+        .section-heading { 
+            font-family: var(--f-display); 
+            font-size: clamp(1.8rem, 6vw, 3rem); 
+            font-weight: 700; line-height: 1.1; 
+        }
+        .rule { 
+            display: block; width: 48px; height: 3px; margin: 1rem 0; 
+            background: linear-gradient(90deg, var(--rose), var(--sky)); 
+            border-radius: 2px; 
+        }
+        .rule-center { margin: 1rem auto; }
+
+        .reveal { 
+            opacity: 0; transform: translateY(28px); 
+            transition: opacity 0.7s cubic-bezier(.16,1,.3,1), transform 0.7s cubic-bezier(.16,1,.3,1); 
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+        .reveal-d1 { transition-delay: 0.1s; } .reveal-d2 { transition-delay: 0.2s; } .reveal-d3 { transition-delay: 0.3s; }
+
+        /* ── CONTACT MAIN - Mobile Optimized ── */
+        .contact-main { 
+            padding: 4rem 1rem; 
+            background: linear-gradient(160deg, #070e1e 0%, #0c1830 60%, #060e1c 100%); 
+        }
+        @media (min-width: 768px) {
+            .contact-main {
+                padding: 8rem 5%;
+            }
+        }
+        .contact-main-bg { 
+            position: absolute; width: 700px; height: 700px; top: -200px; right: -200px; 
+            background: radial-gradient(circle, rgba(90,200,250,0.06) 0%, transparent 65%); 
+            pointer-events: none; 
+        }
+        .contact-main-inner { 
+            max-width: 1360px; margin: 0 auto; 
+            display: grid; grid-template-columns: 1fr; 
+            gap: 3rem; align-items: start; 
+        }
+        @media (min-width: 1024px) {
+            .contact-main-inner {
+                grid-template-columns: 1.1fr 1fr;
+                gap: 4rem;
+            }
+        }
+
+        /* ── FORM - Mobile Optimized ── */
+        .form-side { position: relative; z-index: 1; }
+        .form-side > p { 
+            color: rgba(255,255,255,0.6); line-height: 1.7; 
+            margin: 1rem 0 1.5rem; 
+            font-size: 0.85rem; 
+        }
+        @media (min-width: 640px) {
+            .form-side > p {
+                font-size: 0.95rem;
+                line-height: 1.8;
+                margin: 1.4rem 0 2rem;
+            }
         }
 
         .contact-form {
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            background: var(--glass-1); backdrop-filter: blur(24px) saturate(140%);
+            border: 1px solid var(--border); border-radius: 20px;
+            padding: 1.5rem; box-shadow: var(--shadow);
+            position: relative; overflow: hidden;
+        }
+        @media (min-width: 640px) {
+            .contact-form {
+                padding: 2rem;
+                border-radius: 24px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .contact-form {
+                padding: 2.5rem;
+            }
         }
 
-        .form-group {
-            margin-bottom: 1.5rem;
+        .form-row { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 1rem; 
+        }
+        @media (min-width: 640px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
         }
 
+        .form-group { margin-bottom: 1rem; }
         .form-group label {
-            display: block;
-            color: #8B008B;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            font-size: 1rem;
+            display: block; font-size: 0.65rem; font-weight: 500;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            color: var(--sky-light); margin-bottom: 0.4rem;
         }
-
         .form-group input,
         .form-group textarea,
         .form-group select {
-            width: 100%;
-            padding: 1rem;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1rem;
-            font-family: inherit;
-            transition: all 0.3s ease;
-            background: white;
+            width: 100%; padding: 0.7rem 0.9rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border); border-radius: 8px;
+            color: var(--white); font-family: var(--f-body); font-size: 0.85rem;
+            transition: all 0.25s ease; outline: none;
+            -webkit-appearance: none;
         }
-
-        .form-group input:focus,
-        .form-group textarea:focus,
-        .form-group select:focus {
-            outline: none;
-            border-color: #8B008B;
-            box-shadow: 0 0 0 3px rgba(139, 0, 139, 0.1);
+        @media (min-width: 640px) {
+            .form-group input,
+            .form-group textarea,
+            .form-group select {
+                padding: 0.85rem 1rem;
+                font-size: 0.9rem;
+                border-radius: 10px;
+            }
         }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
+        .form-group textarea { resize: vertical; min-height: 100px; }
+        @media (min-width: 640px) {
+            .form-group textarea {
+                min-height: 130px;
+            }
         }
 
         .submit-btn {
-            width: 100%;
-            padding: 1.2rem;
-            background: linear-gradient(135deg, #8B008B, #4B0082);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(139, 0, 139, 0.3);
+            width: 100%; padding: 0.8rem 1.5rem; margin-top: 0.5rem;
+            background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+            color: white; border: none; border-radius: 50px;
+            font-family: var(--f-body); font-size: 0.8rem; font-weight: 500;
+            letter-spacing: 0.06em; text-transform: uppercase;
+            cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: var(--glow-rose);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+        @media (min-width: 640px) {
+            .submit-btn {
+                padding: 1rem 2rem;
+                font-size: 0.9rem;
+            }
         }
 
-        .submit-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(139, 0, 139, 0.5);
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            color: #8B008B;
-        }
-
-        /* Contact Info Cards */
-        .contact-info-section {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-        }
+        /* ── INFO CARDS - Mobile Optimized ── */
+        .info-side { display: flex; flex-direction: column; gap: 1rem; }
 
         .info-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-            border: 2px solid transparent;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            padding: 1.2rem;
+            background: var(--glass-1); backdrop-filter: blur(20px) saturate(140%);
+            border: 1px solid var(--border); border-radius: 16px;
+            display: flex; align-items: flex-start; gap: 1rem;
+            position: relative; overflow: hidden;
+            transition: all 0.3s cubic-bezier(.16,1,.3,1);
+        }
+        @media (min-width: 640px) {
+            .info-card {
+                padding: 1.6rem 1.8rem;
+                border-radius: 18px;
+                gap: 1.2rem;
+            }
         }
 
-        .info-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .info-card:hover::before {
-            left: 100%;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 50px rgba(139, 0, 139, 0.2);
-            border-color: #FFD700;
-        }
-
-        .info-header {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .info-icon {
-            width: 70px;
-            height: 70px;
-            background: linear-gradient(135deg, #8B008B, #4B0082);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: #FFD700;
-            flex-shrink: 0;
+        .ic-icon {
+            width: 40px; height: 40px; flex-shrink: 0; border-radius: 10px;
+            background: linear-gradient(135deg, rgba(255,45,91,0.2), rgba(90,200,250,0.1));
+            border: 1px solid rgba(255,45,91,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; position: relative; z-index: 1;
             transition: all 0.3s ease;
         }
-
-        .info-card:hover .info-icon {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            transform: rotate(360deg);
+        @media (min-width: 640px) {
+            .ic-icon {
+                width: 46px; height: 46px; border-radius: 12px;
+                font-size: 1.3rem;
+            }
+        }
+        .ic-label { 
+            font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky-light); margin-bottom: 0.3rem; 
+        }
+        @media (min-width: 640px) {
+            .ic-label {
+                font-size: 0.65rem;
+            }
+        }
+        .ic-val { 
+            font-size: 0.75rem; color: rgba(255,255,255,0.7); line-height: 1.4; 
+        }
+        @media (min-width: 640px) {
+            .ic-val {
+                font-size: 0.88rem;
+                line-height: 1.5;
+            }
         }
 
-        .info-header h3 {
-            color: #8B008B;
-            font-size: 1.8rem;
+        /* ── COMPANY DETAILS - Mobile Optimized ── */
+        .details { 
+            padding: 4rem 1rem; 
+            background: var(--navy); 
         }
-
-        .info-details {
-            padding-left: 0;
+        @media (min-width: 768px) {
+            .details {
+                padding: 8rem 5%;
+            }
         }
-
-        .info-item {
-            padding: 0.8rem 0;
-            font-size: 1.05rem;
-            color: #555;
-            border-bottom: 1px solid #f0f0f0;
+        .details-bg { 
+            position: absolute; inset: 0; 
+            background: radial-gradient(ellipse 60% 55% at 0% 50%, rgba(255,45,91,0.07) 0%, transparent 55%), 
+                        radial-gradient(ellipse 50% 45% at 100% 40%, rgba(90,200,250,0.06) 0%, transparent 55%); 
         }
-
-        .info-item:last-child {
-            border-bottom: none;
+        .details-inner { max-width: 1360px; margin: 0 auto; position: relative; z-index: 1; }
+        .details-header { text-align: center; max-width: 620px; margin: 0 auto 3rem; }
+        .details-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 1.5rem; 
         }
-
-        .info-item strong {
-            color: #8B008B;
-            display: inline-block;
-            min-width: 100px;
+        @media (min-width: 640px) {
+            .details-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
-
-        /* Company Details */
-        .company-details {
-            padding: 5rem 5%;
-            background: linear-gradient(135deg, #8B008B 0%, #4B0082 100%);
-            color: white;
-        }
-
-        .details-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .details-container h2 {
-            font-size: 2.5rem;
-            color: #FFD700;
-            margin-bottom: 3rem;
-            text-align: center;
-        }
-
-        .details-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+        @media (min-width: 1024px) {
+            .details-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .detail-card {
-            background: rgba(255, 255, 255, 0.1);
-            padding: 2.5rem;
-            border-radius: 15px;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 215, 0, 0.3);
+            background: var(--glass-1); backdrop-filter: blur(20px) saturate(140%);
+            border: 1px solid var(--border); border-radius: 20px;
+            padding: 1.5rem; position: relative; overflow: hidden;
+            transition: all 0.35s cubic-bezier(.16,1,.3,1);
+        }
+        @media (min-width: 640px) {
+            .detail-card {
+                padding: 2rem;
+            }
+        }
+        .detail-card-icon { font-size: 1.5rem; margin-bottom: 0.8rem; display: block; }
+        .detail-card h3 { 
+            font-family: var(--f-display); 
+            font-size: 1.1rem; font-weight: 700; color: var(--sky-light); 
+            margin-bottom: 1rem; padding-bottom: 0.8rem; 
+            border-bottom: 1px solid var(--border); position: relative; z-index: 1; 
+        }
+        @media (min-width: 640px) {
+            .detail-card h3 {
+                font-size: 1.25rem;
+                padding-bottom: 1rem;
+                margin-bottom: 1.2rem;
+            }
+        }
+        .detail-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-start; 
+            gap: 0.5rem; 
+            padding: 0.5rem 0; 
+            border-bottom: 1px solid rgba(255,255,255,0.05); 
+            position: relative; z-index: 1; 
+            transition: all 0.2s; 
+        }
+        .d-key { 
+            font-size: 0.7rem; color: rgba(255,255,255,0.45); letter-spacing: 0.04em; flex-shrink: 0; 
+        }
+        .d-val { 
+            font-size: 0.75rem; color: rgba(255,255,255,0.72); text-align: right; transition: color 0.2s; 
+        }
+        @media (min-width: 640px) {
+            .d-key {
+                font-size: 0.75rem;
+            }
+            .d-val {
+                font-size: 0.82rem;
+            }
+        }
+
+        /* ── LOCATION - Mobile Optimized ── */
+        .location { 
+            padding: 4rem 1rem; 
+            background: linear-gradient(160deg, #0c1830 0%, #060e1c 100%); 
+        }
+        @media (min-width: 768px) {
+            .location {
+                padding: 8rem 5%;
+            }
+        }
+        .location-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(90,200,250,0.07) 0%, transparent 60%); }
+        .location-inner { max-width: 1360px; margin: 0 auto; position: relative; z-index: 1; }
+        .location-header { text-align: center; max-width: 620px; margin: 0 auto 2.5rem; }
+
+        .address-banner {
+            padding: 1.2rem; margin-bottom: 2rem;
+            background: var(--glass-1); backdrop-filter: blur(20px);
+            border: 1px solid var(--border); border-radius: 16px;
+            display: flex; align-items: center; gap: 1rem;
             transition: all 0.3s ease;
-        }
-
-        .detail-card:hover {
-            background: rgba(255, 215, 0, 0.2);
-            transform: scale(1.05);
-            border-color: #FFD700;
-        }
-
-        .detail-card h3 {
-            color: #FFD700;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            padding-bottom: 1rem;
-            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
-        }
-
-        .detail-row {
-            display: flex;
-            justify-content: space-between;
-            padding: 0.8rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .detail-row:last-child {
-            border-bottom: none;
-        }
-
-        .detail-label {
-            font-weight: bold;
-            color: #FFD700;
-        }
-
-        .detail-value {
-            text-align: right;
-        }
-
-        /* Map Section */
-        .map-section {
-            padding: 5rem 5%;
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-        }
-
-        .map-container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-
-        .map-container h2 {
-            font-size: 2.5rem;
-            color: #8B008B;
-            margin-bottom: 2rem;
-            text-align: center;
-            position: relative;
-        }
-
-        .map-container h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: #FFD700;
-        }
-
-        .address-highlight {
-            text-align: center;
-            font-size: 1.2rem;
-            margin: 3rem 0;
-            padding: 2rem;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-
-        .address-highlight strong {
-            color: #8B008B;
-            font-size: 1.4rem;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .map-placeholder {
-            width: 100%;
-            height: 500px;
-            background: linear-gradient(rgba(139, 0, 139, 0.1), rgba(75, 0, 130, 0.1)),
-                        url('https://images.unsplash.com/photo-1524661135-423995f22d0b?w=1600') center/cover;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .map-placeholder::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(255, 255, 255, 0.9);
-        }
-
-        .map-icon {
-            font-size: 5rem;
-            color: #8B008B;
-            position: relative;
-            z-index: 1;
-            animation: bounce 2s infinite;
-        }
-
-        /* Operating Hours */
-        .hours-section {
-            padding: 5rem 5%;
-            background: white;
-        }
-
-        .hours-container {
-            max-width: 800px;
-            margin: 0 auto;
+            flex-direction: column;
             text-align: center;
         }
-
-        .hours-container h2 {
-            font-size: 2.5rem;
-            color: #8B008B;
-            margin-bottom: 3rem;
-            position: relative;
-            display: inline-block;
+        @media (min-width: 640px) {
+            .address-banner {
+                padding: 1.8rem 2.4rem;
+                flex-direction: row;
+                text-align: left;
+                gap: 1.5rem;
+            }
+        }
+        .addr-pin { 
+            width: 40px; height: 40px; flex-shrink: 0; border-radius: 12px; 
+            background: linear-gradient(135deg, var(--rose), var(--rose-deep)); 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.2rem; box-shadow: var(--glow-rose); 
+        }
+        @media (min-width: 640px) {
+            .addr-pin {
+                width: 50px; height: 50px; border-radius: 14px;
+                font-size: 1.4rem;
+            }
+        }
+        .addr-label { 
+            font-size: 0.55rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--sky-light); margin-bottom: 0.2rem; 
+        }
+        .addr-text { 
+            font-size: 0.8rem; color: rgba(255,255,255,0.72); line-height: 1.5; 
+        }
+        @media (min-width: 640px) {
+            .addr-text {
+                font-size: 0.92rem;
+            }
         }
 
-        .hours-container h2::after {
-            content: '';
-            position: absolute;
-            bottom: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 100px;
-            height: 4px;
-            background: #FFD700;
+        .map-frame {
+            width: 100%; height: 300px; border-radius: 20px; overflow: hidden;
+            border: 1px solid var(--border); position: relative;
+            background: linear-gradient(135deg, rgba(255,45,91,0.08), rgba(90,200,250,0.05), rgba(5,14,31,0.6));
+            box-shadow: var(--shadow);
+        }
+        @media (min-width: 640px) {
+            .map-frame {
+                height: 400px;
+            }
+        }
+        @media (min-width: 1024px) {
+            .map-frame {
+                height: 480px;
+            }
+        }
+        .map-overlay-text { 
+            position: absolute; top: 1rem; left: 1rem; 
+            padding: 0.5rem 1rem; 
+            background: rgba(5,14,31,0.8); backdrop-filter: blur(12px); 
+            border: 1px solid var(--border); border-radius: 50px; 
+            font-size: 0.65rem; color: var(--sky-light); letter-spacing: 0.08em; z-index: 2; 
+        }
+        @media (min-width: 640px) {
+            .map-overlay-text {
+                font-size: 0.75rem;
+            }
         }
 
-        .hours-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
+        /* ── HOURS - Mobile Optimized ── */
+        .hours { 
+            padding: 4rem 1rem; 
+            background: var(--navy); 
+        }
+        @media (min-width: 768px) {
+            .hours {
+                padding: 8rem 5%;
+            }
+        }
+        .hours-bg { position: absolute; inset: 0; background: radial-gradient(ellipse 55% 50% at 50% 0%, rgba(255,45,91,0.07) 0%, transparent 55%); }
+        .hours-inner { max-width: 1360px; margin: 0 auto; position: relative; z-index: 1; }
+        .hours-header { text-align: center; max-width: 620px; margin: 0 auto 3rem; }
+        .hours-grid { 
+            display: grid; 
+            grid-template-columns: 1fr; 
+            gap: 1.5rem; 
+        }
+        @media (min-width: 640px) {
+            .hours-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (min-width: 1024px) {
+            .hours-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
         }
 
         .hours-card {
-            background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%);
-            padding: 2.5rem;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            padding: 1.5rem; text-align: center;
+            background: var(--glass-1); border: 1px solid var(--border); border-radius: 20px;
+            position: relative; overflow: hidden;
+            transition: all 0.35s cubic-bezier(.16,1,.3,1);
         }
-
-        .hours-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(139, 0, 139, 0.3);
-        }
-
-        .hours-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hours-card h3 {
-            color: #8B008B;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .hours-card p {
-            font-size: 1.1rem;
-            color: #555;
-        }
-
-        /* Footer */
-        footer {
-            background: #1a1a1a;
-            color: white;
-            text-align: center;
-            padding: 2rem;
-        }
-
-        footer p {
-            color: #FFD700;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-20px);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 0.5rem;
-            }
-
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-
-            .contact-form {
+        @media (min-width: 640px) {
+            .hours-card {
                 padding: 2rem;
+            }
+        }
+        @media (min-width: 1024px) {
+            .hours-card {
+                padding: 2.4rem 2rem;
+            }
+        }
+        .h-icon-wrap { 
+            width: 50px; height: 50px; border-radius: 14px; margin: 0 auto 1rem; 
+            background: linear-gradient(135deg, rgba(255,45,91,0.2), rgba(90,200,250,0.1)); 
+            border: 1px solid rgba(255,45,91,0.2); 
+            display: flex; align-items: center; justify-content: center; 
+            font-size: 1.4rem; position: relative; z-index: 1; 
+            transition: all 0.35s cubic-bezier(.16,1,.3,1); 
+        }
+        @media (min-width: 640px) {
+            .h-icon-wrap {
+                width: 64px; height: 64px; border-radius: 18px;
+                font-size: 1.8rem;
+                margin-bottom: 1.4rem;
+            }
+        }
+        .hours-card h3 { 
+            font-family: var(--f-display); 
+            font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 0.4rem; 
+            position: relative; z-index: 1; 
+        }
+        @media (min-width: 640px) {
+            .hours-card h3 {
+                font-size: 1.3rem;
+                margin-bottom: 0.6rem;
+            }
+        }
+        .h-time { 
+            font-size: 0.9rem; font-weight: 500; color: var(--sky-light); 
+            position: relative; z-index: 1; margin-bottom: 0.2rem; 
+        }
+        .h-note { 
+            font-size: 0.7rem; color: rgba(255,255,255,0.42); 
+            position: relative; z-index: 1; line-height: 1.4; 
+        }
+        @media (min-width: 640px) {
+            .h-note {
+                font-size: 0.78rem;
+                line-height: 1.5;
+            }
+        }
+
+        /* ── FOOTER - Mobile Optimized ── */
+        footer { 
+            background: rgba(0,0,0,0.5); 
+            border-top: 1px solid var(--border); 
+            padding: 2rem 1rem; 
+            text-align: center; 
+        }
+        .footer-inner { max-width: 1360px; margin: 0 auto; }
+        .footer-logo { 
+            font-family: var(--f-display); 
+            font-size: 1.2rem; font-weight: 700; 
+            background: linear-gradient(90deg, var(--rose), var(--sky-light)); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; 
+            margin-bottom: 0.5rem; 
+        }
+        @media (min-width: 640px) {
+            .footer-logo {
+                font-size: 1.5rem;
+            }
+        }
+        footer p { 
+            font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 0.3rem; 
+            line-height: 1.5;
+        }
+        .footer-rule { margin: 1rem auto; height: 1px; max-width: 200px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent); }
+
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(32px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* ── SUCCESS TOAST ── */
+        .toast { 
+            position: fixed; bottom: 1rem; right: 1rem; 
+            padding: 0.8rem 1.2rem; 
+            background: var(--glass-2); backdrop-filter: blur(20px); 
+            border: 1px solid rgba(90,200,250,0.3); border-radius: 12px; 
+            color: var(--white); font-size: 0.8rem; 
+            box-shadow: var(--shadow), var(--glow-sky); 
+            z-index: 9000; 
+            transform: translateY(100px); opacity: 0; 
+            transition: all 0.4s cubic-bezier(.16,1,.3,1); 
+            pointer-events: none; 
+        }
+        @media (min-width: 640px) {
+            .toast {
+                bottom: 2rem; right: 2rem;
+                padding: 1rem 1.8rem;
+                font-size: 0.88rem;
+            }
+        }
+        .toast.show { transform: translateY(0); opacity: 1; }
+        .toast span { color: var(--sky-light); font-weight: 500; }
+
+        /* ── RESPONSIVE NAV ── */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+            .hamburger {
+                display: flex;
+            }
+            .logo-label {
+                display: none;
+            }
+            .logo-badge {
+                width: 45px;
+                height: 45px;
+            }
+        }
+
+        @media (min-width: 1025px) {
+            .mobile-nav-overlay {
+                display: none;
+            }
+            .logo-label {
+                display: block;
+            }
+            .logo-badge {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        /* Touch-friendly improvements */
+        @media (max-width: 768px) {
+            .section-heading {
+                font-size: clamp(1.6rem, 5vw, 2.2rem);
+            }
+            .info-card:hover {
+                transform: translateX(0);
+            }
+            .submit-btn:hover {
+                transform: translateY(0);
             }
         }
     </style>
 </head>
 <body>
-    <nav>
-        <div class="container">
-            <div class="logo">EWoman Power T&P</div>
-            <ul>
+
+    <!-- Custom Cursor (only visible on desktop) -->
+    <div class="cursor" id="cursor"></div>
+    <div class="cursor-ring" id="cursor-ring"></div>
+    <div class="toast" id="toast">✓ <span>Message sent!</span> We'll be in touch within 24 hours.</div>
+
+    <!-- NAV with Hamburger Menu -->
+    <nav id="nav">
+        <div class="nav-inner">
+            <a href="index.html" class="logo-wrap">
+                <div class="logo-badge">
+                    <img src="assets/womenLogo.jpeg" alt="Logo" style="width: 80px; height: 60px; margin-left: 10px;">
+                </div>
+                <span class="logo-label">EWOMAN POWER</span>
+            </a>
+            
+            <!-- Desktop Navigation -->
+            <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="services.html">Services</a></li>
-                <li><a href="ontact">Contact</a></li>
+                <li><a href="contact.html" class="active">Contact</a></li>
             </ul>
+
+            <!-- Hamburger Icon (mobile only) -->
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
         </div>
     </nav>
 
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav-overlay" id="mobileNavOverlay">
+        <ul class="mobile-nav-links">
+            <li><a href="index.html" onclick="closeMobileMenu()">Home</a></li>
+            <li><a href="about.html" onclick="closeMobileMenu()">About</a></li>
+            <li><a href="services.html" onclick="closeMobileMenu()">Services</a></li>
+            <li><a href="contact.html" class="active" onclick="closeMobileMenu()">Contact</a></li>
+        </ul>
+    </div>
+
+    <!-- HERO -->
     <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-grid"></div>
+        <div class="orbit orbit-1"></div>
+        <div class="orbit orbit-2"></div>
         <div class="hero-content">
+            <div class="hero-eyebrow">EWoman Power Trading &amp; Projects</div>
             <h1>Get In Touch</h1>
-            <p>We're here to answer your questions and discuss your fuel supply needs</p>
+            <p class="hero-sub">We're here to answer your questions and discuss your fuel supply needs</p>
         </div>
     </section>
 
+    <!-- CONTACT MAIN -->
     <section class="contact-main">
-        <div class="contact-container">
-            <div class="contact-form-section">
-                <h2>Send Us a Message</h2>
-                <p>Have a question or need a quote? Fill out the form below and our team will get back to you as soon as possible.</p>
-                
+        <div class="contact-main-bg"></div>
+        <div class="contact-main-inner">
+
+            <!-- FORM -->
+            <div class="form-side reveal">
+                <div class="section-tag">Send a Message</div>
+                <h2 class="section-heading">Let's Start a<br>Conversation</h2>
+                <span class="rule"></span>
+                <p>Have a question or need a quote? Fill out the form below and our team will get back to you within 24 hours.</p>
+
                 <div class="contact-form">
-                    <div class="form-group">
-                        <label>Full Name *</label>
-                        <input type="text" placeholder="Enter your full name" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Full Name *</label>
+                            <input type="text" placeholder="Your full name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone Number *</label>
+                            <input type="tel" placeholder="Your phone number" required>
+                        </div>
                     </div>
-                    
                     <div class="form-group">
                         <label>Email Address *</label>
-                        <input type="email" placeholder="Enter your email address" required>
+                        <input type="email" placeholder="Your email address" required>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Phone Number *</label>
-                        <input type="tel" placeholder="Enter your phone number" required>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Organisation / Company</label>
+                            <input type="text" placeholder="Optional">
+                        </div>
+                        <div class="form-group">
+                            <label>Service Required *</label>
+                            <select required>
+                                <option value="">Select a service</option>
+                                <option value="petrol">Petrol Supply</option>
+                                <option value="diesel">Diesel Supply</option>
+                                <option value="lubricants">Lubricants</option>
+                                <option value="multiple">Multiple Services</option>
+                                <option value="other">General Inquiry</option>
+                            </select>
+                        </div>
                     </div>
-                    
-                    <div class="form-group">
-                        <label>Organization / Company</label>
-                        <input type="text" placeholder="Your organization name (optional)">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label>Service Required *</label>
-                        <select required>
-                            <option value="">Select a service</option>
-                            <option value="petrol">Petrol Supply</option>
-                            <option value="diesel">Diesel Supply</option>
-                            <option value="lubricants">Lubricants</option>
-                            <option value="multiple">Multiple Services</option>
-                            <option value="other">Other / General Inquiry</option>
-                        </select>
-                    </div>
-                    
                     <div class="form-group">
                         <label>Message *</label>
-                        <textarea placeholder="Tell us about your requirements..." required></textarea>
+                        <textarea placeholder="Tell us about your requirements, quantities, delivery location..." required></textarea>
                     </div>
-                    
-                    <button type="submit" class="submit-btn">Send Message</button>
+                    <button type="button" class="submit-btn" id="submitBtn">Send Message &nbsp;→</button>
                 </div>
             </div>
 
-            <div class="contact-info-section">
+            <!-- INFO CARDS -->
+            <div class="info-side reveal reveal-d1">
                 <div class="info-card">
-                    <div class="info-header">
-                        <div class="info-icon">📞</div>
-                        <h3>Phone Numbers</h3>
-                    </div>
-                    <div class="info-details">
-                        <div class="info-item"><strong>Primary:</strong> 062 926 9028</div>
-                        <div class="info-item"><strong>Secondary:</strong> 061 656 2443</div>
-                        <div class="info-item"><strong>Alternative:</strong> 083 502 0274</div>
+                    <div class="ic-icon">📞</div>
+                    <div class="ic-body">
+                        <div class="ic-label">Phone Numbers</div>
+                        <div class="ic-values">
+                            <div class="ic-val">062 926 9028 <span style="color:rgba(255,255,255,0.3); font-size:0.6rem;">Primary</span></div>
+                            <div class="ic-val">061 656 2443 <span style="color:rgba(255,255,255,0.3); font-size:0.6rem;">Secondary</span></div>
+                            <div class="ic-val">083 502 0274 <span style="color:rgba(255,255,255,0.3); font-size:0.6rem;">Alternative</span></div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="info-card">
-                    <div class="info-header">
-                        <div class="info-icon">✉️</div>
-                        <h3>Email Address</h3>
-                    </div>
-                    <div class="info-details">
-                        <div class="info-item">onalennajohnny078@gmail.com</div>
-                        <div class="info-item" style="font-size: 0.95rem; color: #888;">We respond within 24 hours</div>
+                    <div class="ic-icon">✉️</div>
+                    <div class="ic-body">
+                        <div class="ic-label">Email Address</div>
+                        <div class="ic-values">
+                            <div class="ic-val"><a href="mailto:onalennajohnny078@gmail.com" style="color:inherit; text-decoration:none;">onalennajohnny078@gmail.com</a></div>
+                            <div class="ic-sub" style="font-size:0.65rem; color:rgba(255,255,255,0.35);">We respond within 24 hours</div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="info-card">
-                    <div class="info-header">
-                        <div class="info-icon">📍</div>
-                        <h3>Physical Address</h3>
-                    </div>
-                    <div class="info-details">
-                        <div class="info-item">House No: 02 Wildeperdeberg</div>
-                        <div class="info-item">Phase 4, Kathu Rooisand</div>
-                        <div class="info-item">Northern Cape, 8446</div>
-                        <div class="info-item">South Africa</div>
+                    <div class="ic-icon">📍</div>
+                    <div class="ic-body">
+                        <div class="ic-label">Physical Address</div>
+                        <div class="ic-values">
+                            <div class="ic-val">House No: 02 Wildeperdeberg</div>
+                            <div class="ic-val">Phase 4, Kathu Rooisand</div>
+                            <div class="ic-val">Northern Cape, 8446</div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="info-card">
-                    <div class="info-header">
-                        <div class="info-icon">👩‍💼</div>
-                        <h3>CEO Contact</h3>
+                    <div class="ic-icon">👩‍💼</div>
+                    <div class="ic-body">
+                        <div class="ic-label">CEO Direct Contact</div>
+                        <div class="ic-values">
+                            <div class="ic-val">Onalenna Caroline Johnny</div>
+                            <div class="ic-val">062 926 9028</div>
+                            <div class="ic-sub" style="font-size:0.65rem; color:rgba(255,255,255,0.35);">Direct line — urgent matters</div>
+                        </div>
                     </div>
-                    <div class="info-details">
-                        <div class="info-item"><strong>Name:</strong> Johnny O.C</div>
-                        <div class="info-item"><strong>Direct Line:</strong> 062 926 9028</div>
+                </div>
+                <div class="info-card">
+                    <div class="ic-icon">⏰</div>
+                    <div class="ic-body">
+                        <div class="ic-label">Business Hours</div>
+                        <div class="ic-values">
+                            <div class="ic-val">Mon – Fri &nbsp; 8:00 AM – 5:00 PM</div>
+                            <div class="ic-sub" style="font-size:0.65rem; color:rgba(255,255,255,0.35);">Emergency deliveries available 24/7</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="company-details">
-        <div class="details-container">
-            <h2>Company Information</h2>
+    <!-- COMPANY DETAILS -->
+    <section class="details">
+        <div class="details-bg"></div>
+        <div class="details-inner">
+            <div class="details-header reveal">
+                <div class="section-tag">Official Records</div>
+                <h2 class="section-heading">Company Information</h2>
+                <span class="rule rule-center"></span>
+                <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; line-height:1.6;">All verified company details for procurement, compliance, and partnership purposes.</p>
+            </div>
             <div class="details-grid">
-                <div class="detail-card">
+                <div class="detail-card reveal">
+                    <span class="detail-card-icon">🏢</span>
                     <h3>Registration Details</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Company Name:</span>
-                        <span class="detail-value">EWoman Power Trading and Projects</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Registration No:</span>
-                        <span class="detail-value">2018/522819/07</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Business Type:</span>
-                        <span class="detail-value">Private Company</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Established:</span>
-                        <span class="detail-value">October 2, 2018</span>
-                    </div>
+                    <div class="detail-row"><span class="d-key">Company</span><span class="d-val">EWoman Power T&amp;P</span></div>
+                    <div class="detail-row"><span class="d-key">Reg. Number</span><span class="d-val" style="background: linear-gradient(90deg, var(--rose), var(--sky)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">2018/522819/07</span></div>
+                    <div class="detail-row"><span class="d-key">Business Type</span><span class="d-val">Private Company</span></div>
+                    <div class="detail-row"><span class="d-key">Established</span><span class="d-val">October 2, 2018</span></div>
+                    <div class="detail-row"><span class="d-key">CEO</span><span class="d-val">Johnny O.C</span></div>
                 </div>
-
-                <div class="detail-card">
-                    <h3>Tax & Compliance</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Tax Reference:</span>
-                        <span class="detail-value">9251340239</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">BBBEE Status:</span>
-                        <span class="detail-value">100% Black Female</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Ownership:</span>
-                        <span class="detail-value">100% Black Female Owned</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">VAT Registered:</span>
-                        <span class="detail-value">Yes</span>
-                    </div>
+                <div class="detail-card reveal reveal-d1">
+                    <span class="detail-card-icon">📋</span>
+                    <h3>Tax &amp; Compliance</h3>
+                    <div class="detail-row"><span class="d-key">Tax Reference</span><span class="d-val" style="background: linear-gradient(90deg, var(--rose), var(--sky)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">9251340239</span></div>
+                    <div class="detail-row"><span class="d-key">BBBEE Status</span><span class="d-val">Level 1</span></div>
+                    <div class="detail-row"><span class="d-key">Ownership</span><span class="d-val">100% Black Female</span></div>
+                    <div class="detail-row"><span class="d-key">VAT Registered</span><span class="d-val">Yes</span></div>
+                    <div class="detail-row"><span class="d-key">Compliant</span><span class="d-val">Fully Certified</span></div>
                 </div>
-
-                <div class="detail-card">
-                    <h3>Banking Details</h3>
-                    <div class="detail-row">
-                        <span class="detail-label">Account Name:</span>
-                        <span class="detail-value">EWoman Power T&P</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Status:</span>
-                        <span class="detail-value">Active & Verified</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Payment Terms:</span>
-                        <span class="detail-value">Flexible Options</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Invoice Support:</span>
-                        <span class="detail-value">Available</span>
-                    </div>
+                <div class="detail-card reveal reveal-d2">
+                    <span class="detail-card-icon">💳</span>
+                    <h3>Banking &amp; Payment</h3>
+                    <div class="detail-row"><span class="d-key">Account Name</span><span class="d-val">EWoman Power T&amp;P</span></div>
+                    <div class="detail-row"><span class="d-key">Account Status</span><span class="d-val">Active &amp; Verified</span></div>
+                    <div class="detail-row"><span class="d-key">Payment Terms</span><span class="d-val">Flexible Options</span></div>
+                    <div class="detail-row"><span class="d-key">Invoice Support</span><span class="d-val">Available</span></div>
+                    <div class="detail-row"><span class="d-key">EFT / Cheque</span><span class="d-val">Accepted</span></div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="map-section">
-        <div class="map-container">
-            <h2>Our Location</h2>
-            <div class="address-highlight">
-                <strong>📍 Visit Us At:</strong>
-                House No: 02 Wildeperdeberg, Phase 4, Kathu Rooisand, Northern Cape, 8446
+    <!-- LOCATION -->
+    <section class="location">
+        <div class="location-bg"></div>
+        <div class="location-inner">
+            <div class="location-header reveal">
+                <div class="section-tag">Find Us</div>
+                <h2 class="section-heading">Our Location</h2>
+                <span class="rule rule-center"></span>
             </div>
-            <div class="map-placeholder">
-                <div class="map-icon">📍</div>
+            <div class="address-banner reveal">
+                <div class="addr-pin">📍</div>
+                <div>
+                    <div class="addr-label">Physical Address</div>
+                    <div class="addr-text">House No: 02 Wildeperdeberg, Phase 4, Kathu Rooisand, Northern Cape, 8446, South Africa</div>
+                </div>
+            </div>
+            <div class="map-frame reveal">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3499.1!2d23.0475!3d-27.6882!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjfCsDQxJzE3LjYiUyAyM8KwMDInNTEuMCJF!5e0!3m2!1sen!2sza!4v1620000000000!5m2!1sen!2sza"
+                    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                    title="EWoman Power Trading location — Kathu, Northern Cape">
+                </iframe>
+                <div class="map-overlay-text">📍 Kathu, Northern Cape — 8446</div>
             </div>
         </div>
     </section>
 
-    <section class="hours-section">
-        <div class="hours-container">
-            <h2>Business Hours</h2>
+    <!-- HOURS -->
+    <section class="hours">
+        <div class="hours-bg"></div>
+        <div class="hours-inner">
+            <div class="hours-header reveal">
+                <div class="section-tag">Availability</div>
+                <h2 class="section-heading">Business Hours</h2>
+                <span class="rule rule-center"></span>
+                <p style="color:rgba(255,255,255,0.5); font-size:0.85rem; line-height:1.6;">We're here when you need us — including around the clock for urgent fuel delivery.</p>
+            </div>
             <div class="hours-grid">
-                <div class="hours-card">
-                    <div class="hours-icon">🕐</div>
+                <div class="hours-card reveal">
+                    <div class="h-icon-wrap">🕐</div>
                     <h3>Business Days</h3>
-                    <p>Monday - Friday<br>8:00 AM - 5:00 PM</p>
+                    <div class="h-time">Monday – Friday</div>
+                    <div class="h-note">8:00 AM – 5:00 PM<br>Standard office hours</div>
                 </div>
-                <div class="hours-card">
-                    <div class="hours-icon">📞</div>
-                    <h3>Emergency Service</h3>
-                    <p>24/7 Available<br>For urgent deliveries</p>
+                <div class="hours-card reveal reveal-d1">
+                    <div class="h-icon-wrap">🚨</div>
+                    <h3>Emergency Supply</h3>
+                    <div class="h-time">24 / 7 Available</div>
+                    <div class="h-note">For urgent deliveries<br>Call: 062 926 9028</div>
                 </div>
-                <div class="hours-card">
-                    <div class="hours-icon">💬</div>
+                <div class="hours-card reveal reveal-d2">
+                    <div class="h-icon-wrap">💬</div>
                     <h3>Response Time</h3>
-                    <p>Within 24 Hours<br>For all inquiries</p>
+                    <div class="h-time">Within 24 Hours</div>
+                    <div class="h-note">For all email enquiries<br>Faster via phone</div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- FOOTER -->
     <footer>
-        <p>&copy; 2025 EWoman Power Trading & Projects. All rights reserved.</p>
-        <p style="margin-top: 0.5rem; color: #ccc;">Empowering Communities Through Quality Fuel Solutions</p>
+        <div class="footer-inner">
+            <div class="footer-logo">EWoman Power Trading &amp; Projects</div>
+            <div class="footer-rule"></div>
+            <p>&copy; 2025 EWoman Power Trading &amp; Projects. All rights reserved.</p>
+            <p style="margin-top:0.4rem;">Empowering Communities Through Quality Fuel Solutions &nbsp;·&nbsp; Kathu, South Africa</p>
+        </div>
     </footer>
+
+    <script>
+        // Custom cursor (only active on desktop)
+        if (window.innerWidth >= 1025) {
+            const cursor = document.getElementById('cursor');
+            const ring = document.getElementById('cursor-ring');
+            let mx = 0, my = 0, rx = 0, ry = 0;
+            document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+            const animCursor = () => {
+                cursor.style.transform = `translate(${mx - 5}px, ${my - 5}px)`;
+                rx += (mx - rx) * 0.15; ry += (my - ry) * 0.15;
+                ring.style.transform = `translate(${rx - 18}px, ${ry - 18}px)`;
+                requestAnimationFrame(animCursor);
+            };
+            animCursor();
+        }
+
+        // Nav scroll effect
+        const nav = document.getElementById('nav');
+        window.addEventListener('scroll', () => {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+        });
+
+        // Hamburger menu functionality
+        const hamburger = document.getElementById('hamburger');
+        const mobileNavOverlay = document.getElementById('mobileNavOverlay');
+        
+        function toggleMobileMenu() {
+            hamburger.classList.toggle('active');
+            mobileNavOverlay.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            if (mobileNavOverlay.classList.contains('active')) {
+                document.body.style.overflow = 'hidden';
+            } else {
+                document.body.style.overflow = '';
+            }
+        }
+        
+        function closeMobileMenu() {
+            hamburger.classList.remove('active');
+            mobileNavOverlay.classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        hamburger.addEventListener('click', toggleMobileMenu);
+        
+        // Close menu when clicking on a link
+        document.querySelectorAll('.mobile-nav-links a').forEach(link => {
+            link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Close menu on window resize if open
+        window.addEventListener('resize', function() {
+            if (window.innerWidth >= 1025 && mobileNavOverlay.classList.contains('active')) {
+                closeMobileMenu();
+            }
+        });
+
+        // Scroll reveal
+        const io = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Form submit toast
+        document.getElementById('submitBtn').addEventListener('click', function () {
+            const inputs = document.querySelectorAll('.contact-form input[required], .contact-form textarea[required], .contact-form select[required]');
+            let valid = true;
+            inputs.forEach(i => {
+                if (!i.value.trim()) {
+                    valid = false;
+                    i.style.borderColor = 'rgba(255,45,91,0.7)';
+                    i.style.boxShadow = '0 0 0 3px rgba(255,45,91,0.15)';
+                    setTimeout(() => { i.style.borderColor = ''; i.style.boxShadow = ''; }, 2000);
+                }
+            });
+            if (!valid) return;
+            const toast = document.getElementById('toast');
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+            
+            // Clear form (optional)
+            const allInputs = document.querySelectorAll('.contact-form input, .contact-form textarea, .contact-form select');
+            allInputs.forEach(i => i.value = '');
+        });
+
+        // Input focus cursor ring change (desktop only)
+        if (window.innerWidth >= 1025) {
+            document.querySelectorAll('input, textarea, select').forEach(el => {
+                el.addEventListener('focus', () => { 
+                    ring.style.width = '56px'; 
+                    ring.style.height = '56px'; 
+                    ring.style.borderColor = 'rgba(90,200,250,0.6)'; 
+                });
+                el.addEventListener('blur',  () => { 
+                    ring.style.width = ''; 
+                    ring.style.height = ''; 
+                    ring.style.borderColor = ''; 
+                });
+            });
+        }
+    </script>
 </body>
 </html>
